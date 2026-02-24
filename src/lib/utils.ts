@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]): string {
 /** Resolve chart image URL from backend path */
 export function resolveChartUrl(path: string | null): string | null {
   if (!path) return null;
-  const base = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/v1";
+  const base = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/v1").replace(/\/+$/, "");
   return `${base.replace(/\/v1$/, "")}${path}`;
 }
 

@@ -13,7 +13,7 @@ import type {
   HealthResponse,
 } from "@/types/api";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/v1";
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/v1").replace(/\/+$/, "");
 
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
