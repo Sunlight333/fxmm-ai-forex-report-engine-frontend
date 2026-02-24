@@ -80,7 +80,39 @@ export interface Subscription {
   created_at: string;
 }
 
+export interface CalendarEvent {
+  id: string;
+  date: string;
+  time: string | null;
+  currency: string;
+  event_name: string;
+  impact_level: "low" | "medium" | "high";
+  forecast: string | null;
+  actual: string | null;
+  previous: string | null;
+}
+
+export interface GenerationLog {
+  id: string;
+  pair: string;
+  run_date: string;
+  status: "success" | "failure" | "partial";
+  error_details: string | null;
+  duration_ms: number | null;
+  created_at: string;
+}
+
+export interface HealthResponse {
+  status: string;
+  database: string;
+}
+
 export const FX_PAIRS = [
   "EURUSD", "USDJPY", "GBPUSD", "AUDUSD", "USDCAD",
   "USDCHF", "NZDUSD", "EURJPY", "GBPJPY", "EURGBP", "AUDJPY",
 ] as const;
+
+export const MAJOR_PAIRS = ["EURUSD", "USDJPY", "GBPUSD", "AUDUSD", "USDCAD", "USDCHF", "NZDUSD"] as const;
+export const CROSS_PAIRS = ["EURJPY", "GBPJPY", "EURGBP", "AUDJPY"] as const;
+
+export type FXPair = (typeof FX_PAIRS)[number];

@@ -1,8 +1,21 @@
 /** API client for the FXMM backend. */
 
+import type {
+  User,
+  ReportDetail,
+  ReportSummary,
+  Zone,
+  CreditBalance,
+  CreditTransaction,
+  Subscription,
+  CalendarEvent,
+  GenerationLog,
+  HealthResponse,
+} from "@/types/api";
+
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/v1";
 
-class ApiError extends Error {
+export class ApiError extends Error {
   constructor(public status: number, message: string) {
     super(message);
     this.name = "ApiError";
@@ -39,6 +52,11 @@ async function request<T>(
   return res.json();
 }
 
+// Health
+export const health = {
+  check: () => request<HealthResponse>("/health"),
+};
+
 // Auth
 export const auth = {
   register: (email: string, password: string, language = "en") =>
@@ -62,10 +80,10 @@ export const auth = {
 
 // User
 export const user = {
-  me: () => request<import("@/types/api").User>("/user/me"),
+  me: () => request<User>("/user/me"),
 
   update: (data: { language?: string; selected_pairs?: string[] }) =>
-    request<import("@/types/api").User>("/user/me", {
+    request<User>("/user/me", {
       method: "PATCH",
       body: JSON.stringify(data),
     }),
@@ -74,42 +92,42 @@ export const user = {
 // Reports
 export const reports = {
   latest: (pair: string) =>
-    request<import("@/types/api").ReportDetail>(`/reports/latest/${pair}`),
+    request<ReportDetail>(`/reports/latest/${pair}`),
 
   byId: (id: string) =>
-    request<import("@/types/api").ReportDetail>(`/reports/${id}`),
+    request<ReportDetail>(`/reports/${id}`),
 
-  history: (pair: string, limit = 30) =>
-    request<import("@/types/api").ReportSummary[]>(
-      `/reports/history/${pair}?limit=${limit}`
+  history: (pair: string, limit = 30, offset = 0) =>
+    request<ReportSummary[]>(
+      `/reports/history/${pair}?limit=${limit}&offset=${offset}`
     ),
 
   byDate: (date: string) =>
-    request<import("@/types/api").ReportSummary[]>(`/reports/by-date/${date}`),
+    request<ReportSummary[]>(`/reports/by-date/${date}`),
 };
 
 // Zones
 export const zones = {
   active: (pair: string) =>
-    request<import("@/types/api").Zone[]>(`/zones/active/${pair}`),
+    request<Zone[]>(`/zones/active/${pair}`),
 
   byReport: (reportId: string) =>
-    request<import("@/types/api").Zone[]>(`/zones/by-report/${reportId}`),
+    request<Zone[]>(`/zones/by-report/${reportId}`),
 };
 
 // Credits
 export const credits = {
   balance: () =>
-    request<import("@/types/api").CreditBalance>("/credits/balance"),
+    request<CreditBalance>("/credits/balance"),
 
   purchase: (amount: number, paymentRef?: string) =>
-    request<import("@/types/api").CreditTransaction>("/credits/purchase", {
+    request<CreditTransaction>("/credits/purchase", {
       method: "POST",
       body: JSON.stringify({ amount, payment_reference: paymentRef }),
     }),
 
   consume: (pair: string) =>
-    request<import("@/types/api").CreditTransaction>("/credits/consume", {
+    request<CreditTransaction>("/credits/consume", {
       method: "POST",
       body: JSON.stringify({ pair }),
     }),
@@ -118,7 +136,12 @@ export const credits = {
 // Subscriptions
 export const subscriptions = {
   list: () =>
-    request<import("@/types/api").Subscription[]>("/subscriptions/"),
+    request<Subscription[]>("/subscriptions/"),
+
+  checkAll: () =>
+    request<{
+      pairs: Record<string, { has_access: boolean; end_date: string | null }>;
+    }>("/subscriptions/check-all"),
 
   check: (pair: string) =>
     request<{ pair: string; has_access: boolean; end_date: string | null }>(
@@ -126,23 +149,55 @@ export const subscriptions = {
     ),
 };
 
+// Calendar
+export const calendar = {
+  today: () => request<CalendarEvent[]>("/calendar/today"),
+
+  week: () => request<CalendarEvent[]>("/calendar/week"),
+
+  byPair: (pair: string) =>
+    request<CalendarEvent[]>(`/calendar/pair/${pair}`),
+};
+
+// Live quotes
+export const quotes = {
+  snapshot: () =>
+    request<{
+      quotes: Record<string, {
+        pair: string;
+        price: number;
+        open: number;
+        high: number;
+        low: number;
+        previous_close: number;
+        change: number;
+        percent_change: number;
+        timestamp: string;
+      }>;
+      updated_at: number;
+      pair_count: number;
+    }>("/quotes/snapshot"),
+};
+
 // Admin
 export const admin = {
   users: () =>
-    request<import("@/types/api").User[]>("/admin/users"),
+    request<User[]>("/admin/users"),
 
   adjustCredits: (userId: string, amount: number, reason: string) =>
-    request("/admin/credits/adjust", {
+    request<CreditTransaction>("/admin/credits/adjust", {
       method: "POST",
       body: JSON.stringify({ user_id: userId, amount, reason }),
     }),
 
   triggerGeneration: (pairs?: string[], language = "en") =>
-    request("/admin/trigger-generation", {
+    request<Record<string, unknown>>("/admin/trigger-generation", {
       method: "POST",
       body: JSON.stringify({ pairs, language }),
     }),
 
   generationLogs: (runDate?: string) =>
-    request("/admin/generation-logs" + (runDate ? `?run_date=${runDate}` : "")),
+    request<GenerationLog[]>(
+      "/admin/generation-logs" + (runDate ? `?run_date=${runDate}` : "")
+    ),
 };

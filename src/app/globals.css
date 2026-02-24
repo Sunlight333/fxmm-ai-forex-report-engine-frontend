@@ -17,3 +17,35 @@ body {
   background-color: var(--bg-primary);
   color: var(--text);
 }
+
+/* Focus ring for keyboard accessibility */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3A3A5E;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(30, 136, 229, 0.3);
+}
+
+/* Smooth scrolling for section navigation */
+html {
+  scroll-behavior: smooth;
+}
