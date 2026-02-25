@@ -94,7 +94,7 @@ export default function ReportPage() {
       );
     }
 
-    if (error.includes("404") || error.includes("not found")) {
+    if (error.includes("404") || error.includes("No report") || error.includes("not found")) {
       return (
         <Card className="mx-auto mt-12 max-w-md text-center">
           <h2 className="mb-2 text-lg font-semibold text-white">{formatPair(pair)}</h2>
