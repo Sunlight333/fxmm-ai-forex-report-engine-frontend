@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { resolveChartUrl, cn } from "@/lib/utils";
 import { useT } from "@/i18n/provider";
 import { Modal } from "@/components/ui/Modal";
@@ -20,6 +20,12 @@ export function ChartImage({ path, title, alt, className }: ChartImageProps) {
   const [zoomed, setZoomed] = useState(false);
 
   const url = resolveChartUrl(path);
+
+  // Reset loading/error state when the chart URL changes (e.g. after regeneration)
+  useEffect(() => {
+    setLoading(true);
+    setError(false);
+  }, [url]);
 
   if (!url) {
     return (
