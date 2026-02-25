@@ -78,6 +78,8 @@ export const en = {
     noReport: "No report available for this pair yet.",
     generateNow: "Generate Report",
     generating: "Generating your report — this may take a moment...",
+    staleReport: "This report is from a previous day. Generate today's report for the latest analysis.",
+    missingCharts: "Charts are not available for this report. Regenerate to include charts.",
     accessDenied: "You need an active subscription to view this report.",
     unlockNow: "Unlock Now",
     sections: {

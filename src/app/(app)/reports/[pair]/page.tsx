@@ -68,6 +68,9 @@ export default function ReportPage() {
     }
   }, [pair, refetch]);
 
+  const isStale = report && report.date !== new Date().toISOString().slice(0, 10);
+  const hasNoCharts = report && !report.chart_file_url && !report.radar_file_url;
+
   if (loading || generating) {
     return (
       <>
@@ -119,6 +122,19 @@ export default function ReportPage() {
 
   return (
     <div className="animate-fade-in">
+      {(isStale || hasNoCharts) && (
+        <Card className="mb-4 flex items-center justify-between">
+          <p className="text-sm text-gray-400">
+            {isStale
+              ? t("report.staleReport")
+              : t("report.missingCharts")}
+          </p>
+          {genError && <p className="text-sm text-red-400">{genError}</p>}
+          <Button variant="primary" size="sm" onClick={handleGenerate}>
+            {t("report.generateNow")}
+          </Button>
+        </Card>
+      )}
       <ReportHeader report={report} />
 
       {/* Charts */}

@@ -80,6 +80,8 @@ export const es: TranslationKeys = {
     noReport: "A\u00fan no hay informe disponible para este par.",
     generateNow: "Generar Informe",
     generating: "Generando tu informe — esto puede tardar un momento...",
+    staleReport: "Este informe es de un dia anterior. Genera el informe de hoy para el analisis mas reciente.",
+    missingCharts: "Los graficos no estan disponibles para este informe. Regenera para incluir graficos.",
     accessDenied: "Necesitas una suscripci\u00f3n activa para ver este informe.",
     unlockNow: "Desbloquear Ahora",
     sections: {
