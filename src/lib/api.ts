@@ -94,6 +94,9 @@ export const reports = {
   latest: (pair: string) =>
     request<ReportDetail>(`/reports/latest/${pair}`),
 
+  generate: (pair: string) =>
+    request<ReportDetail>(`/reports/generate/${pair}`, { method: "POST" }),
+
   byId: (id: string) =>
     request<ReportDetail>(`/reports/${id}`),
 

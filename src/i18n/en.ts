@@ -76,6 +76,8 @@ export const en = {
     pdfSaved: "PDF saved successfully",
     pdfError: "Failed to download PDF",
     noReport: "No report available for this pair yet.",
+    generateNow: "Generate Report",
+    generating: "Generating your report — this may take a moment...",
     accessDenied: "You need an active subscription to view this report.",
     unlockNow: "Unlock Now",
     sections: {

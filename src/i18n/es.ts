@@ -78,6 +78,8 @@ export const es: TranslationKeys = {
     pdfSaved: "PDF guardado exitosamente",
     pdfError: "Error al descargar el PDF",
     noReport: "A\u00fan no hay informe disponible para este par.",
+    generateNow: "Generar Informe",
+    generating: "Generando tu informe — esto puede tardar un momento...",
     accessDenied: "Necesitas una suscripci\u00f3n activa para ver este informe.",
     unlockNow: "Desbloquear Ahora",
     sections: {

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { useT } from "@/i18n/provider";
@@ -41,6 +42,9 @@ export default function ReportPage() {
   const { t } = useT();
   const pair = params.pair as string;
 
+  const [generating, setGenerating] = useState(false);
+  const [genError, setGenError] = useState<string | null>(null);
+
   const { data: report, loading, error, refetch } = useApi<ReportDetail>(
     () => reports.latest(pair),
     [pair]
@@ -51,7 +55,31 @@ export default function ReportPage() {
     [report?.id]
   );
 
-  if (loading) return <ReportSkeleton />;
+  const handleGenerate = useCallback(async () => {
+    setGenerating(true);
+    setGenError(null);
+    try {
+      await reports.generate(pair);
+      await refetch();
+    } catch (err) {
+      setGenError(err instanceof Error ? err.message : "Generation failed");
+    } finally {
+      setGenerating(false);
+    }
+  }, [pair, refetch]);
+
+  if (loading || generating) {
+    return (
+      <>
+        {generating && (
+          <Card className="mx-auto mb-4 max-w-md text-center">
+            <p className="text-sm text-brand-cyan">{t("report.generating")}</p>
+          </Card>
+        )}
+        <ReportSkeleton />
+      </>
+    );
+  }
 
   if (error) {
     if (error.includes("403") || error.includes("access") || error.includes("subscription")) {
@@ -71,8 +99,11 @@ export default function ReportPage() {
         <Card className="mx-auto mt-12 max-w-md text-center">
           <h2 className="mb-2 text-lg font-semibold text-white">{formatPair(pair)}</h2>
           <p className="mb-4 text-sm text-gray-400">{t("report.noReport")}</p>
-          <Button variant="secondary" onClick={() => router.push("/dashboard")}>
-            {t("errors.goHome")}
+          {genError && (
+            <p className="mb-4 text-sm text-red-400">{genError}</p>
+          )}
+          <Button variant="primary" onClick={handleGenerate}>
+            {t("report.generateNow")}
           </Button>
         </Card>
       );
