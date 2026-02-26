@@ -11,6 +11,8 @@ import type {
   CalendarEvent,
   GenerationLog,
   HealthResponse,
+  ApiStatusInfo,
+  ApiTestResult,
 } from "@/types/api";
 
 const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/v1").replace(/\/+$/, "");
@@ -203,4 +205,23 @@ export const admin = {
     request<GenerationLog[]>(
       "/admin/generation-logs" + (runDate ? `?run_date=${runDate}` : "")
     ),
+
+  apiStatus: () =>
+    request<ApiStatusInfo[]>("/admin/api-status"),
+
+  testApi: (apiName: string) =>
+    request<ApiTestResult>(`/admin/api-status/test?api_name=${encodeURIComponent(apiName)}`, {
+      method: "POST",
+    }),
+
+  updateApiKey: (apiName: string, keyValue: string, password: string, secondaryValue?: string) =>
+    request<{ status: string; api_name: string }>("/admin/api-status", {
+      method: "PUT",
+      body: JSON.stringify({
+        api_name: apiName,
+        key_value: keyValue,
+        secondary_value: secondaryValue || null,
+        password,
+      }),
+    }),
 };

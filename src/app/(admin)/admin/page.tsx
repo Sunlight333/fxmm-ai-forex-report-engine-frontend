@@ -70,6 +70,11 @@ export default function AdminOverviewPage() {
                 {t("admin.triggerGeneration")}
               </Button>
             </Link>
+            <Link href="/admin/api-status" className="block">
+              <Button variant="secondary" size="sm" className="w-full justify-start">
+                {t("admin.apiStatus")}
+              </Button>
+            </Link>
             <Link href="/admin/health" className="block">
               <Button variant="secondary" size="sm" className="w-full justify-start">
                 {t("admin.health")}

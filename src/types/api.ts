@@ -107,6 +107,25 @@ export interface HealthResponse {
   database: string;
 }
 
+export interface ApiStatusInfo {
+  name: string;
+  display_name: string;
+  description: string;
+  masked_key: string;
+  masked_secondary: string | null;
+  has_key: boolean;
+  requires_key: boolean;
+  has_secondary: boolean;
+}
+
+export interface ApiTestResult {
+  name: string;
+  status: "online" | "offline" | "no_key";
+  response_time_ms: number | null;
+  error: string | null;
+  checked_at: string;
+}
+
 export const FX_PAIRS = [
   "EURUSD", "USDJPY", "GBPUSD", "AUDUSD", "USDCAD",
   "USDCHF", "NZDUSD", "EURJPY", "GBPJPY", "EURGBP", "AUDJPY",
