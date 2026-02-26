@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]): string {
 export function resolveChartUrl(path: string | null): string | null {
   if (!path) return null;
   const base = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/v1").replace(/\/+$/, "");
-  return `${base.replace(/\/v1$/, "")}${path}`;
+  return `${base}${path}`;
 }
 
 /** Format FX pair for display: "EURUSD" -> "EUR/USD" */
