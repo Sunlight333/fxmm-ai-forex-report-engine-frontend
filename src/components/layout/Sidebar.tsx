@@ -159,22 +159,27 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
 
       {/* User profile section at top */}
       {user && (
-        <div className="mx-3 mb-4 rounded-xl bg-dark-hover/50 px-3 py-3">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-xs font-bold text-white">
-              {user.email.charAt(0).toUpperCase()}
-            </div>
-            <div className="flex-1 overflow-hidden">
-              <p className="truncate text-sm font-medium text-foreground">{user.email}</p>
-              <Badge
-                variant={user.tier === "professional" ? "tier-professional" : "tier-retail"}
-                className="mt-0.5 text-[10px]"
-              >
-                {user.tier}
-              </Badge>
-            </div>
+        <Link
+          href="/settings"
+          onClick={onClose}
+          className="mx-3 mb-4 flex items-center gap-3 rounded-xl bg-dark-hover/50 px-3 py-3 transition-colors hover:bg-dark-hover"
+        >
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-xs font-bold text-white">
+            {user.email.charAt(0).toUpperCase()}
           </div>
-        </div>
+          <div className="flex-1 overflow-hidden">
+            <p className="truncate text-sm font-medium text-foreground">{user.email}</p>
+            <Badge
+              variant={user.tier === "professional" ? "tier-professional" : "tier-retail"}
+              className="mt-0.5 text-[10px]"
+            >
+              {user.tier}
+            </Badge>
+          </div>
+          <svg className="h-4 w-4 shrink-0 text-subtle" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+        </Link>
       )}
 
       {/* Main navigation */}
