@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { useT } from "@/i18n/provider";
-import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
@@ -59,7 +58,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <Card>
+    <div className="rounded-lg border border-dark-border bg-dark-card p-6 shadow-xl shadow-black/20">
       <h2 className="mb-1 text-xl font-bold text-white">{t("auth.createAccount")}</h2>
       <p className="mb-6 text-sm text-gray-500">{t("auth.createAccountDesc")}</p>
 
@@ -112,6 +111,6 @@ export default function RegisterPage() {
           {t("auth.loginLink")}
         </Link>
       </p>
-    </Card>
+    </div>
   );
 }

@@ -4,13 +4,13 @@ import { useMemo } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { useT } from "@/i18n/provider";
 import { useSubscriptionAccess } from "@/lib/hooks/use-subscription-access";
-import { PageHeader } from "@/components/layout/PageHeader";
-import { StatsCard } from "@/components/dashboard/StatsCard";
-import { PairGrid } from "@/components/dashboard/PairGrid";
+import { FX_PAIRS } from "@/types/api";
+import { MarketOverview } from "@/components/dashboard/MarketOverview";
 import { LiveQuotes } from "@/components/dashboard/LiveQuotes";
+import { RecentReports } from "@/components/dashboard/RecentReports";
 import { PairChartSection } from "@/components/dashboard/PairChartSection";
-import { Badge } from "@/components/ui/Badge";
-import { Skeleton, SkeletonCard } from "@/components/ui/Skeleton";
+import { PairGrid } from "@/components/dashboard/PairGrid";
+import { SkeletonCard } from "@/components/ui/Skeleton";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
@@ -26,90 +26,80 @@ export default function DashboardPage() {
         .map(([pair]) => pair),
     [accessMap]
   );
-  const activePairs = subscribedPairs.length;
 
   return (
-    <div className="animate-fade-in">
-      <PageHeader title={t("dashboard.title")} />
+    <div className="animate-fade-in space-y-6">
+      {/* Market overview strip */}
+      <MarketOverview
+        activePairs={subscribedPairs.length}
+        totalPairs={FX_PAIRS.length}
+        subsLoading={subsLoading}
+      />
 
-      {/* Stats row — shows user data immediately, subscription count loads in */}
-      <div className="mb-8 grid gap-4 grid-cols-1 sm:grid-cols-3">
-        <StatsCard
-          label={t("dashboard.creditBalance")}
-          value={user?.credit_balance ?? "—"}
-          icon={
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          }
-          badge={
-            user && user.credit_balance < 3 ? (
-              <Link href="/credits">
-                <Badge variant="warning">{t("dashboard.buyCredits")}</Badge>
+      {/* Two-column layout on lg+ */}
+      <div className="grid gap-6 lg:grid-cols-5">
+        {/* Left column — wider (3/5) */}
+        <div className="space-y-6 lg:col-span-3">
+          <LiveQuotes />
+          <PairChartSection subscribedPairs={subscribedPairs} loading={subsLoading} />
+        </div>
+
+        {/* Right column (2/5) */}
+        <div className="space-y-6 lg:col-span-2">
+          <RecentReports />
+
+          {/* Quick Actions */}
+          <div className="rounded-lg border border-dark-border bg-dark-card p-4">
+            <h3 className="mb-3 text-sm font-semibold text-white">Quick Actions</h3>
+            <div className="space-y-2">
+              <Link href="/pairs" className="block">
+                <Button variant="primary" size="sm" className="w-full justify-start gap-2">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                  </svg>
+                  {t("nav.pairs")}
+                </Button>
               </Link>
-            ) : undefined
-          }
-        />
-        <StatsCard
-          label={t("dashboard.activePairs")}
-          value={subsLoading ? "…" : `${activePairs}/11`}
-          icon={
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
-            </svg>
-          }
-        />
-        <StatsCard
-          label={t("dashboard.tier")}
-          value={user ? user.tier.charAt(0).toUpperCase() + user.tier.slice(1) : "—"}
-          icon={
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-            </svg>
-          }
-          badge={
-            user ? (
-              <Badge variant={user.tier === "professional" ? "tier-professional" : "tier-retail"}>
-                {user.tier}
-              </Badge>
-            ) : undefined
-          }
-        />
+              <Link href="/credits" className="block">
+                <Button variant="secondary" size="sm" className="w-full justify-start gap-2">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {t("dashboard.buyCredits")}
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Live FX Rates — loads independently */}
-      <div className="mb-8">
-        <LiveQuotes />
-      </div>
+      {/* Pair grid — full width below */}
+      <div>
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500">
+            FX Pairs
+          </h2>
+          {user && user.credit_balance === 0 && (
+            <Link href="/credits">
+              <Button variant="primary" size="sm">{t("dashboard.buyCredits")}</Button>
+            </Link>
+          )}
+        </div>
 
-      {/* Report Charts — loads independently */}
-      <div className="mb-8">
-        <PairChartSection subscribedPairs={subscribedPairs} loading={subsLoading} />
-      </div>
-
-      {/* Pair grid */}
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-white">FX Pairs</h2>
-        {user && user.credit_balance === 0 && (
-          <Link href="/credits">
-            <Button variant="primary" size="sm">{t("dashboard.buyCredits")}</Button>
-          </Link>
+        {subsLoading ? (
+          <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+            {Array.from({ length: 11 }).map((_, i) => (
+              <SkeletonCard key={i} className="h-[120px]" />
+            ))}
+          </div>
+        ) : (
+          <PairGrid
+            accessMap={accessMap}
+            creditBalance={user?.credit_balance ?? 0}
+            onUnlock={refreshAccess}
+          />
         )}
       </div>
-
-      {subsLoading ? (
-        <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {Array.from({ length: 11 }).map((_, i) => (
-            <SkeletonCard key={i} className="h-[140px]" />
-          ))}
-        </div>
-      ) : (
-        <PairGrid
-          accessMap={accessMap}
-          creditBalance={user?.credit_balance ?? 0}
-          onUnlock={refreshAccess}
-        />
-      )}
     </div>
   );
 }

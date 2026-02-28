@@ -29,7 +29,11 @@ export const es: TranslationKeys = {
     credits: "Cr\u00e9ditos",
     settings: "Configuraci\u00f3n",
     admin: "Admin",
+    users: "Usuarios",
+    generation: "Generaci\u00f3n",
+    apiStatus: "Estado de APIs",
     logout: "Cerrar Sesi\u00f3n",
+    tagline: "Informes Forex IA",
   },
   auth: {
     signIn: "Iniciar Sesi\u00f3n",

@@ -7,8 +7,6 @@ import { useT } from "@/i18n/provider";
 import { user as userApi } from "@/lib/api";
 import { formatPair } from "@/lib/utils";
 import { FX_PAIRS } from "@/types/api";
-import { PageHeader } from "@/components/layout/PageHeader";
-import { Card } from "@/components/ui/Card";
 import { Tabs } from "@/components/ui/Tabs";
 import { Select } from "@/components/ui/Select";
 import { Checkbox } from "@/components/ui/Checkbox";
@@ -52,32 +50,32 @@ export default function SettingsPage() {
   };
 
   const profileTab = (
-    <Card>
-      <div className="space-y-4">
+    <div className="rounded-lg border border-dark-border bg-dark-card p-5">
+      <div className="space-y-5">
         <div>
-          <label className="text-sm text-gray-500">{t("settings.email")}</label>
-          <p className="mt-1 text-white">{user.email}</p>
+          <label className="text-xs font-medium uppercase tracking-wider text-gray-500">{t("settings.email")}</label>
+          <p className="mt-1 text-sm text-white">{user.email}</p>
         </div>
-        <div>
-          <label className="text-sm text-gray-500">{t("dashboard.tier")}</label>
+        <div className="border-t border-dark-border pt-5">
+          <label className="text-xs font-medium uppercase tracking-wider text-gray-500">{t("dashboard.tier")}</label>
           <div className="mt-1">
             <Badge variant={user.tier === "professional" ? "tier-professional" : "tier-retail"}>
               {user.tier}
             </Badge>
           </div>
         </div>
-        <div>
-          <label className="text-sm text-gray-500">{t("settings.memberSince")}</label>
-          <p className="mt-1 text-white">
+        <div className="border-t border-dark-border pt-5">
+          <label className="text-xs font-medium uppercase tracking-wider text-gray-500">{t("settings.memberSince")}</label>
+          <p className="mt-1 text-sm text-white">
             {format(new Date(user.created_at), "MMMM d, yyyy")}
           </p>
         </div>
       </div>
-    </Card>
+    </div>
   );
 
   const preferencesTab = (
-    <Card>
+    <div className="rounded-lg border border-dark-border bg-dark-card p-5">
       <div className="space-y-6">
         <Select
           label={t("settings.language")}
@@ -89,8 +87,8 @@ export default function SettingsPage() {
           ]}
         />
 
-        <div>
-          <label className="mb-2 block text-sm font-medium text-gray-300">
+        <div className="border-t border-dark-border pt-5">
+          <label className="mb-3 block text-xs font-medium uppercase tracking-wider text-gray-500">
             {t("settings.preferredPairs")}
           </label>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -109,18 +107,17 @@ export default function SettingsPage() {
           {t("common.save")}
         </Button>
       </div>
-    </Card>
+    </div>
   );
 
   const notificationsTab = (
-    <Card>
+    <div className="rounded-lg border border-dark-border bg-dark-card p-5">
       <p className="text-sm text-gray-500">{t("settings.notificationSettings")}</p>
-    </Card>
+    </div>
   );
 
   return (
     <div className="animate-fade-in">
-      <PageHeader title={t("settings.title")} />
       <Tabs
         items={[
           { label: t("settings.profile"), content: profileTab },

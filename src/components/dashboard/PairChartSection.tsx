@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { reports } from "@/lib/api";
 import { formatPair, cn } from "@/lib/utils";
 import type { ReportDetail } from "@/types/api";
-import { Card } from "@/components/ui/Card";
 import { ChartImage } from "@/components/report/ChartImage";
 import { SkeletonChart } from "@/components/ui/Skeleton";
 
@@ -19,7 +18,6 @@ type ChartField = (typeof CHART_TABS)[number]["field"];
 
 interface PairChartSectionProps {
   subscribedPairs: string[];
-  /** True while the parent is still loading subscription data */
   loading?: boolean;
 }
 
@@ -30,7 +28,6 @@ export function PairChartSection({ subscribedPairs, loading: subsLoading }: Pair
   const [fetchingPair, setFetchingPair] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Auto-select first subscribed pair once available
   useEffect(() => {
     if (subscribedPairs.length > 0 && !selectedPair) {
       setSelectedPair(subscribedPairs[0]);
@@ -38,9 +35,7 @@ export function PairChartSection({ subscribedPairs, loading: subsLoading }: Pair
   }, [subscribedPairs, selectedPair]);
 
   const fetchReport = useCallback(async (pair: string) => {
-    // Skip if already cached
     if (reportCache[pair]) return;
-
     setFetchingPair(pair);
     setError(null);
     try {
@@ -54,29 +49,30 @@ export function PairChartSection({ subscribedPairs, loading: subsLoading }: Pair
   }, [reportCache]);
 
   useEffect(() => {
-    if (selectedPair) {
-      fetchReport(selectedPair);
-    }
+    if (selectedPair) fetchReport(selectedPair);
   }, [selectedPair, fetchReport]);
 
-  // While subscriptions are loading, show skeleton
   if (subsLoading) {
     return (
-      <Card padding="compact">
-        <h3 className="mb-3 text-sm font-semibold text-white">Report Charts</h3>
-        <SkeletonChart />
-      </Card>
+      <div className="rounded-lg border border-dark-border bg-dark-card">
+        <div className="border-b border-dark-border px-4 py-3">
+          <h3 className="text-sm font-semibold text-white">Report Charts</h3>
+        </div>
+        <div className="p-4"><SkeletonChart /></div>
+      </div>
     );
   }
 
   if (subscribedPairs.length === 0) {
     return (
-      <Card padding="compact">
-        <h3 className="mb-3 text-sm font-semibold text-white">Report Charts</h3>
-        <p className="py-6 text-center text-xs text-gray-600">
+      <div className="rounded-lg border border-dark-border bg-dark-card">
+        <div className="border-b border-dark-border px-4 py-3">
+          <h3 className="text-sm font-semibold text-white">Report Charts</h3>
+        </div>
+        <p className="px-4 py-8 text-center text-xs text-gray-600">
           Unlock a pair to view its analysis charts
         </p>
-      </Card>
+      </div>
     );
   }
 
@@ -85,19 +81,10 @@ export function PairChartSection({ subscribedPairs, loading: subsLoading }: Pair
   const activeTabInfo = CHART_TABS.find((t) => t.field === activeTab)!;
 
   return (
-    <Card padding="compact">
-      {/* Header */}
-      <div className="mb-3 flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-white">Report Charts</h3>
-        {report && (
-          <span className="text-[10px] text-gray-600">
-            {report.date}
-          </span>
-        )}
-      </div>
-
-      {/* Pair selector pills */}
-      <div className="mb-3 flex flex-wrap gap-1.5">
+    <div className="rounded-lg border border-dark-border bg-dark-card">
+      {/* Header with pair pills inline */}
+      <div className="flex flex-wrap items-center gap-2 border-b border-dark-border px-4 py-3">
+        <h3 className="mr-2 text-sm font-semibold text-white">Report Charts</h3>
         {subscribedPairs.map((pair) => (
           <button
             key={pair}
@@ -106,27 +93,30 @@ export function PairChartSection({ subscribedPairs, loading: subsLoading }: Pair
               setActiveTab("chart_file_url");
             }}
             className={cn(
-              "rounded-md px-2.5 py-1 text-xs font-medium transition-colors",
+              "rounded-md px-2 py-0.5 text-[11px] font-semibold transition-colors",
               selectedPair === pair
-                ? "bg-accent text-white"
-                : "bg-dark-surface text-gray-400 hover:bg-dark-border hover:text-gray-300"
+                ? "bg-primary text-white"
+                : "bg-dark-surface text-gray-500 hover:bg-dark-hover hover:text-gray-300"
             )}
           >
             {formatPair(pair)}
           </button>
         ))}
+        {report && (
+          <span className="ml-auto text-[10px] text-gray-600">{report.date}</span>
+        )}
       </div>
 
       {/* Chart type tabs */}
-      <div className="mb-3 flex border-b border-dark-border">
+      <div className="flex border-b border-dark-border">
         {CHART_TABS.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.field)}
             className={cn(
-              "px-3 py-1.5 text-xs font-medium transition-colors",
+              "px-4 py-2 text-xs font-medium transition-colors",
               activeTab === tab.field
-                ? "border-b-2 border-accent text-accent"
+                ? "border-b-2 border-primary text-primary"
                 : "text-gray-500 hover:text-gray-300"
             )}
           >
@@ -135,23 +125,25 @@ export function PairChartSection({ subscribedPairs, loading: subsLoading }: Pair
         ))}
       </div>
 
-      {/* Chart display — skeleton while loading, keeps layout stable */}
-      {isLoading ? (
-        <SkeletonChart />
-      ) : error && !report ? (
-        <div className="flex aspect-video items-center justify-center rounded-lg border border-dark-border bg-dark-surface">
-          <p className="text-sm text-gray-500">{error}</p>
-        </div>
-      ) : report ? (
-        <ChartImage
-          key={`${report.pair}-${activeTab}`}
-          path={report[activeTab]}
-          title={`${activeTabInfo.label} — ${formatPair(report.pair)}`}
-          alt={`${activeTabInfo.label} chart for ${formatPair(report.pair)}, ${report.date}`}
-        />
-      ) : (
-        <SkeletonChart />
-      )}
-    </Card>
+      {/* Chart display */}
+      <div className="p-4">
+        {isLoading ? (
+          <SkeletonChart />
+        ) : error && !report ? (
+          <div className="flex aspect-video items-center justify-center rounded-lg border border-dark-border bg-dark-surface">
+            <p className="text-sm text-gray-500">{error}</p>
+          </div>
+        ) : report ? (
+          <ChartImage
+            key={`${report.pair}-${activeTab}`}
+            path={report[activeTab]}
+            title={`${activeTabInfo.label} \u2014 ${formatPair(report.pair)}`}
+            alt={`${activeTabInfo.label} chart for ${formatPair(report.pair)}, ${report.date}`}
+          />
+        ) : (
+          <SkeletonChart />
+        )}
+      </div>
+    </div>
   );
 }

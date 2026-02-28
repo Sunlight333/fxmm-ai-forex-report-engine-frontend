@@ -56,21 +56,26 @@ export function SectionNavigation({ availableSections }: SectionNavigationProps)
   const filteredKeys = SECTION_KEYS.filter((k) => availableSections.includes(k));
 
   return (
-    <nav className="space-y-0.5" aria-label="Report sections">
-      {filteredKeys.map((key) => (
-        <button
-          key={key}
-          onClick={() => scrollTo(key)}
-          className={cn(
-            "block w-full rounded-md px-3 py-1.5 text-left text-xs transition-colors",
-            activeSection === key
-              ? "bg-primary-light text-primary font-medium"
-              : "text-gray-500 hover:text-gray-300 hover:bg-dark-hover"
-          )}
-        >
-          {t(`report.sections.${key}`)}
-        </button>
-      ))}
+    <nav className="rounded-lg border border-dark-border bg-dark-card p-2" aria-label="Report sections">
+      <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-widest text-gray-600">
+        Sections
+      </p>
+      <div className="space-y-0.5">
+        {filteredKeys.map((key) => (
+          <button
+            key={key}
+            onClick={() => scrollTo(key)}
+            className={cn(
+              "block w-full rounded-md px-2.5 py-1.5 text-left text-xs transition-colors",
+              activeSection === key
+                ? "border-l-2 border-primary bg-primary-light font-medium text-primary"
+                : "border-l-2 border-transparent text-gray-500 hover:bg-dark-hover hover:text-gray-300"
+            )}
+          >
+            {t(`report.sections.${key}`)}
+          </button>
+        ))}
+      </div>
     </nav>
   );
 }

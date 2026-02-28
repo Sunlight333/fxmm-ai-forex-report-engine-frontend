@@ -27,7 +27,11 @@ export const en = {
     credits: "Credits",
     settings: "Settings",
     admin: "Admin",
+    users: "Users",
+    generation: "Generation",
+    apiStatus: "API Status",
     logout: "Logout",
+    tagline: "AI Forex Reports",
   },
   auth: {
     signIn: "Sign In",

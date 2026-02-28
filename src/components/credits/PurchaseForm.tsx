@@ -4,12 +4,17 @@ import { useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { useT } from "@/i18n/provider";
 import { credits } from "@/lib/api";
-import { Card, CardHeader } from "@/components/ui/Card";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import toast from "react-hot-toast";
 
-const PRESET_AMOUNTS = [1, 5, 10, 20];
+const PRESET_AMOUNTS = [
+  { amount: 1, label: "Starter", desc: "1 pair for 5 days" },
+  { amount: 5, label: "Standard", desc: "5 pairs for 5 days" },
+  { amount: 10, label: "Pro", desc: "10 pairs for 5 days" },
+  { amount: 20, label: "Premium", desc: "20 uses" },
+];
 
 interface PurchaseFormProps {
   onPurchase: () => void;
@@ -47,13 +52,13 @@ export function PurchaseForm({ onPurchase }: PurchaseFormProps) {
   };
 
   return (
-    <Card>
-      <CardHeader title={t("credits.purchase")} />
-      <p className="mb-4 text-sm text-gray-500">{t("credits.purchaseDesc")}</p>
+    <div className="rounded-lg border border-dark-border bg-dark-card p-5">
+      <h3 className="mb-1 text-sm font-semibold text-white">{t("credits.purchase")}</h3>
+      <p className="mb-4 text-xs text-gray-500">{t("credits.purchaseDesc")}</p>
 
-      {/* Preset buttons */}
-      <div className="mb-4 flex flex-wrap gap-2">
-        {PRESET_AMOUNTS.map((amt) => (
+      {/* Preset cards */}
+      <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {PRESET_AMOUNTS.map(({ amount: amt, label, desc }) => (
           <button
             key={amt}
             onClick={() => {
@@ -61,26 +66,37 @@ export function PurchaseForm({ onPurchase }: PurchaseFormProps) {
               setCustomMode(false);
               setError("");
             }}
-            className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors ${
+            className={cn(
+              "flex flex-col items-center rounded-lg border p-3 transition-all",
               !customMode && amount === amt
-                ? "border-primary bg-primary-light text-primary"
-                : "border-dark-border text-gray-400 hover:border-gray-500"
-            }`}
+                ? "border-primary bg-primary-light shadow-sm shadow-primary/10"
+                : "border-dark-border hover:border-gray-500"
+            )}
           >
-            {amt} {t("common.credits")}
+            <span className={cn(
+              "text-2xl font-bold tabular-nums",
+              !customMode && amount === amt ? "text-primary" : "text-white"
+            )}>
+              {amt}
+            </span>
+            <span className="text-[11px] font-medium text-gray-400">{label}</span>
+            <span className="text-[10px] text-gray-600">{desc}</span>
           </button>
         ))}
-        <button
-          onClick={() => setCustomMode(true)}
-          className={`rounded-lg border px-4 py-2 text-sm font-medium transition-colors ${
-            customMode
-              ? "border-primary bg-primary-light text-primary"
-              : "border-dark-border text-gray-400 hover:border-gray-500"
-          }`}
-        >
-          {t("credits.customAmount")}
-        </button>
       </div>
+
+      {/* Custom toggle */}
+      <button
+        onClick={() => setCustomMode((v) => !v)}
+        className={cn(
+          "mb-3 rounded-md border px-3 py-1.5 text-xs font-medium transition-colors",
+          customMode
+            ? "border-primary bg-primary-light text-primary"
+            : "border-dark-border text-gray-500 hover:text-gray-300"
+        )}
+      >
+        {t("credits.customAmount")}
+      </button>
 
       {customMode && (
         <div className="mb-4">
@@ -107,6 +123,6 @@ export function PurchaseForm({ onPurchase }: PurchaseFormProps) {
       >
         {t("credits.buyNow")} ({customMode ? customValue || "0" : amount} {t("common.credits")})
       </Button>
-    </Card>
+    </div>
   );
 }

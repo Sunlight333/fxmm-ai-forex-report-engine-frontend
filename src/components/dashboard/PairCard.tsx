@@ -4,9 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { useT } from "@/i18n/provider";
-import { formatPair } from "@/lib/utils";
+import { formatPair, cn } from "@/lib/utils";
 import { credits } from "@/lib/api";
-import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/feedback/ConfirmDialog";
@@ -44,34 +43,44 @@ export function PairCard({ pair, hasAccess, endDate, creditBalance, onUnlock }: 
 
   return (
     <>
-      <Card
-        padding="compact"
-        className="group flex flex-col justify-between transition-colors hover:border-dark-hover"
+      <div
+        className={cn(
+          "group relative flex flex-col justify-between overflow-hidden rounded-lg border bg-dark-card p-4 transition-all hover:shadow-md",
+          hasAccess
+            ? "border-demand/20 hover:border-demand/30"
+            : "border-dark-border hover:border-dark-hover"
+        )}
       >
+        {/* Active accent */}
+        {hasAccess && (
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-demand" />
+        )}
+
         <div>
           <div className="flex items-center justify-between">
-            <span className="text-lg font-bold font-mono text-white">
+            <span className="font-mono text-base font-bold text-white">
               {formatPair(pair)}
             </span>
             <Badge
               variant={hasAccess ? "status-active" : "status-locked"}
+              className="text-[10px]"
             >
               {hasAccess ? t("dashboard.pairActive") : t("dashboard.pairLocked")}
             </Badge>
           </div>
           {hasAccess && endDate && (
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-[11px] text-gray-500">
               {t("dashboard.until")} {new Date(endDate).toLocaleDateString()}
             </p>
           )}
         </div>
 
-        <div className="mt-4">
+        <div className="mt-3">
           {hasAccess ? (
             <Button
               variant="primary"
               size="sm"
-              className="w-full"
+              className="w-full text-xs"
               onClick={() => router.push(`/reports/${pair}`)}
             >
               {t("dashboard.viewReport")}
@@ -80,7 +89,7 @@ export function PairCard({ pair, hasAccess, endDate, creditBalance, onUnlock }: 
             <Button
               variant="secondary"
               size="sm"
-              className="w-full"
+              className="w-full text-xs"
               disabled={creditBalance < 1}
               onClick={() => setShowConfirm(true)}
             >
@@ -90,7 +99,7 @@ export function PairCard({ pair, hasAccess, endDate, creditBalance, onUnlock }: 
             </Button>
           )}
         </div>
-      </Card>
+      </div>
 
       <ConfirmDialog
         open={showConfirm}

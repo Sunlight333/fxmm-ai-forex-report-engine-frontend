@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { useT } from "@/i18n/provider";
 import { loginSchema, type LoginForm } from "@/lib/validation";
-import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import toast from "react-hot-toast";
@@ -46,7 +45,7 @@ export default function LoginPage() {
   };
 
   return (
-    <Card>
+    <div className="rounded-lg border border-dark-border bg-dark-card p-6 shadow-xl shadow-black/20">
       <h2 className="mb-1 text-xl font-bold text-white">{t("auth.welcomeBack")}</h2>
       <p className="mb-6 text-sm text-gray-500">{t("auth.welcomeBackDesc")}</p>
 
@@ -80,6 +79,6 @@ export default function LoginPage() {
           {t("auth.registerLink")}
         </Link>
       </p>
-    </Card>
+    </div>
   );
 }

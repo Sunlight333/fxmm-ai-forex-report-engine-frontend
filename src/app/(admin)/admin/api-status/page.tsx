@@ -4,7 +4,6 @@ import { useT } from "@/i18n/provider";
 import { useApi } from "@/lib/hooks/use-api";
 import { admin } from "@/lib/api";
 import type { ApiStatusInfo } from "@/types/api";
-import { PageHeader } from "@/components/layout/PageHeader";
 import { Spinner } from "@/components/ui/Spinner";
 import { ApiStatusCard } from "@/components/admin/ApiStatusCard";
 
@@ -17,10 +16,7 @@ export default function ApiStatusPage() {
 
   return (
     <div className="animate-fade-in">
-      <PageHeader
-        title={t("admin.apiStatus")}
-        description={t("admin.apiStatusDesc")}
-      />
+      <p className="mb-4 text-xs text-gray-500">{t("admin.apiStatusDesc")}</p>
 
       {loading ? (
         <div className="flex justify-center py-12">

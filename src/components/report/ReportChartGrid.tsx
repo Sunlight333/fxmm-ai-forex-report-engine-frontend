@@ -28,7 +28,7 @@ export function ReportChartGrid({ report }: ReportChartGridProps) {
   const activeItem = CHART_ITEMS.find((c) => c.key === activeChart)!;
 
   return (
-    <div className="rounded-xl border border-dark-border bg-dark-card overflow-hidden">
+    <div className="overflow-hidden rounded-lg border border-dark-border bg-dark-card">
       {/* Tab bar */}
       <div className="flex border-b border-dark-border">
         {CHART_ITEMS.map((item) => {
@@ -41,10 +41,10 @@ export function ReportChartGrid({ report }: ReportChartGridProps) {
               className={cn(
                 "flex flex-1 items-center justify-center gap-1.5 px-3 py-3 text-xs font-medium transition-colors",
                 activeChart === item.key
-                  ? "border-b-2 border-accent text-accent bg-dark-surface/30"
+                  ? "border-b-2 border-primary bg-primary-light text-primary"
                   : hasChart
-                    ? "text-gray-500 hover:text-gray-300 hover:bg-dark-surface/20"
-                    : "text-gray-700 cursor-not-allowed"
+                    ? "text-gray-500 hover:text-gray-300 hover:bg-dark-surface/30"
+                    : "cursor-not-allowed text-gray-700"
               )}
             >
               <svg className="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -56,12 +56,12 @@ export function ReportChartGrid({ report }: ReportChartGridProps) {
         })}
       </div>
 
-      {/* Active chart — full width */}
+      {/* Active chart */}
       <div className="p-4">
         <ChartImage
           key={activeChart}
           path={report[activeChart]}
-          title={`${t(`report.charts.${activeItem.i18nKey}`)} — ${pair} (${date})`}
+          title={`${t(`report.charts.${activeItem.i18nKey}`)} \u2014 ${pair} (${date})`}
           alt={`${t(`report.charts.${activeItem.i18nKey}`)} for ${pair}, ${date}`}
         />
       </div>
