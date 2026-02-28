@@ -101,11 +101,11 @@ export function ChartImage({ path, title, alt, className }: ChartImageProps) {
     return (
       <div
         className={cn(
-          "flex aspect-video items-center justify-center rounded-lg border border-dark-border bg-dark-surface",
+          "flex aspect-video items-center justify-center rounded-xl border border-dark-border bg-dark-surface",
           className
         )}
       >
-        <p className="text-sm text-gray-500">{t("report.charts.unavailable")}</p>
+        <p className="text-sm text-muted-fg">{t("report.charts.unavailable")}</p>
       </div>
     );
   }
@@ -113,12 +113,12 @@ export function ChartImage({ path, title, alt, className }: ChartImageProps) {
   return (
     <>
       <div className={cn("group relative", className)}>
-        <p className="mb-2 text-sm font-medium text-gray-400">{title}</p>
-        <div className="relative overflow-hidden rounded-lg border border-dark-border bg-dark-surface">
+        <p className="mb-2 text-sm font-medium text-muted-fg">{title}</p>
+        <div className="relative overflow-hidden rounded-xl border border-dark-border bg-dark-surface">
           {loading && <SkeletonChart className="absolute inset-0" />}
           {error ? (
             <div className="flex aspect-video items-center justify-center">
-              <p className="text-sm text-gray-500">{t("report.charts.unavailable")}</p>
+              <p className="text-sm text-muted-fg">{t("report.charts.unavailable")}</p>
             </div>
           ) : (
             <img
@@ -138,7 +138,7 @@ export function ChartImage({ path, title, alt, className }: ChartImageProps) {
           )}
           {!loading && !error && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all group-hover:bg-black/20 group-hover:opacity-100">
-              <span className="rounded-full bg-dark-card/80 px-3 py-1 text-xs text-gray-300">
+              <span className="rounded-full bg-dark-card/80 px-3 py-1 text-xs text-muted-fg">
                 {t("report.charts.clickToZoom")}
               </span>
             </div>
@@ -158,7 +158,7 @@ export function ChartImage({ path, title, alt, className }: ChartImageProps) {
           {/* Close button */}
           <button
             onClick={() => setZoomed(false)}
-            className="absolute right-4 top-4 z-10 rounded-full bg-dark-card/80 p-2 text-gray-300 transition-colors hover:bg-dark-card hover:text-white"
+            className="absolute right-4 top-4 z-10 rounded-full bg-dark-card/80 p-2 text-muted-fg transition-colors hover:bg-dark-card hover:text-foreground"
           >
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -166,7 +166,7 @@ export function ChartImage({ path, title, alt, className }: ChartImageProps) {
           </button>
 
           {/* Zoom hint */}
-          <div className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 rounded-full bg-dark-card/80 px-3 py-1 text-xs text-gray-400">
+          <div className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 rounded-full bg-dark-card/80 px-3 py-1 text-xs text-muted-fg">
             Scroll to zoom · Double-click to fit · Click outside to close
           </div>
 
@@ -191,7 +191,7 @@ export function ChartImage({ path, title, alt, className }: ChartImageProps) {
               <img
                 src={url}
                 alt={alt}
-                className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain"
+                className="max-h-[90vh] max-w-[90vw] rounded-xl object-contain"
                 draggable={false}
               />
             </div>

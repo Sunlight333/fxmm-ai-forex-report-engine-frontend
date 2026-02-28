@@ -24,7 +24,7 @@ export function ProgressBar({
     if (percentage >= 75) return "bg-demand";
     if (percentage >= 50) return "bg-primary";
     if (percentage >= 25) return "bg-warning";
-    return "bg-gray-500";
+    return "bg-subtle";
   };
 
   return (
@@ -40,7 +40,7 @@ export function ProgressBar({
         />
       </div>
       {showLabel && (
-        <span className="text-xs font-mono text-gray-400">
+        <span className="text-xs font-mono text-muted-fg">
           {value}/{max}
         </span>
       )}

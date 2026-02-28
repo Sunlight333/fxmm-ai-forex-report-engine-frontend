@@ -78,13 +78,13 @@ export default function PairDetailPage() {
             <Card>
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-base font-semibold text-white">Subscription Status</h3>
+                  <h3 className="text-base font-semibold text-foreground">Subscription Status</h3>
                   <div className="mt-2 flex items-center gap-2">
                     <Badge variant={hasAccess ? "status-active" : "status-locked"}>
                       {hasAccess ? t("dashboard.pairActive") : t("dashboard.pairLocked")}
                     </Badge>
                     {hasAccess && accessData?.end_date && (
-                      <span className="text-sm text-gray-500">
+                      <span className="text-sm text-muted-fg">
                         {t("dashboard.until")} {new Date(accessData.end_date).toLocaleDateString()}
                       </span>
                     )}
@@ -126,7 +126,7 @@ export default function PairDetailPage() {
 
             {(!activeZones || activeZones.length === 0) && (
               <Card>
-                <p className="text-sm text-gray-500">{t("pairs.noActiveZones")}</p>
+                <p className="text-sm text-muted-fg">{t("pairs.noActiveZones")}</p>
               </Card>
             )}
           </div>
@@ -135,17 +135,17 @@ export default function PairDetailPage() {
           <div className="space-y-6">
             {hasAccess && (
               <Card>
-                <h3 className="mb-3 text-base font-semibold text-white">Quick Links</h3>
+                <h3 className="mb-3 text-base font-semibold text-foreground">Quick Links</h3>
                 <div className="space-y-2">
                   <Link
                     href={`/reports/${pair}`}
-                    className="block rounded-lg px-3 py-2 text-sm text-gray-300 hover:bg-dark-hover transition-colors"
+                    className="block rounded-xl px-3 py-2 text-sm text-muted-fg hover:bg-dark-hover transition-colors"
                   >
                     {t("report.latestReport")}
                   </Link>
                   <Link
                     href={`/reports/${pair}/history`}
-                    className="block rounded-lg px-3 py-2 text-sm text-gray-300 hover:bg-dark-hover transition-colors"
+                    className="block rounded-xl px-3 py-2 text-sm text-muted-fg hover:bg-dark-hover transition-colors"
                   >
                     {t("report.viewHistory")}
                   </Link>

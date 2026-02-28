@@ -69,21 +69,21 @@ export function ApiStatusCard({ api, onKeyUpdated }: ApiStatusCardProps) {
       <Card>
         <div className="flex items-start justify-between mb-3">
           <div>
-            <h3 className="text-sm font-semibold text-white">{api.display_name}</h3>
-            <p className="text-xs text-gray-500 mt-0.5">{api.description}</p>
+            <h3 className="text-sm font-semibold text-foreground">{api.display_name}</h3>
+            <p className="text-xs text-muted-fg mt-0.5">{api.description}</p>
           </div>
           {statusBadge()}
         </div>
 
         <div className="space-y-1.5 mb-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-500">Key:</span>
-            <code className="text-xs text-gray-300 font-mono">{api.masked_key}</code>
+            <span className="text-xs text-muted-fg">Key:</span>
+            <code className="text-xs text-foreground font-mono">{api.masked_key}</code>
           </div>
           {api.has_secondary && api.masked_secondary && (
             <div className="flex items-center justify-between">
-              <span className="text-xs text-gray-500">Password:</span>
-              <code className="text-xs text-gray-300 font-mono">{api.masked_secondary}</code>
+              <span className="text-xs text-muted-fg">Password:</span>
+              <code className="text-xs text-foreground font-mono">{api.masked_secondary}</code>
             </div>
           )}
         </div>
@@ -91,7 +91,7 @@ export function ApiStatusCard({ api, onKeyUpdated }: ApiStatusCardProps) {
         {testing && (
           <div className="flex items-center gap-2 rounded bg-dark-surface p-2 mb-3">
             <Spinner size="sm" />
-            <span className="text-xs text-gray-400">Testing connection...</span>
+            <span className="text-xs text-muted-fg">Testing connection...</span>
           </div>
         )}
 
@@ -100,7 +100,7 @@ export function ApiStatusCard({ api, onKeyUpdated }: ApiStatusCardProps) {
             <div className="flex items-center gap-2">
               {testStatusBadge()}
               {testResult.response_time_ms != null && (
-                <span className="text-xs text-gray-400">
+                <span className="text-xs text-muted-fg">
                   {testResult.response_time_ms}ms
                 </span>
               )}

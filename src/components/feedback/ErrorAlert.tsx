@@ -13,7 +13,7 @@ export function ErrorAlert({ message, onRetry, className }: ErrorAlertProps) {
   return (
     <div
       className={cn(
-        "rounded-lg border border-supply/30 bg-supply-light p-4",
+        "rounded-xl border border-supply/30 bg-supply-light p-4",
         className
       )}
       role="alert"

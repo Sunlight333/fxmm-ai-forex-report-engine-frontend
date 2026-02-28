@@ -49,7 +49,7 @@ export function GenerationTrigger() {
   return (
     <Card>
       <CardHeader title={t("admin.triggerGeneration")} />
-      <p className="mb-4 text-sm text-gray-500">{t("admin.triggerDesc")}</p>
+      <p className="mb-4 text-sm text-muted-fg">{t("admin.triggerDesc")}</p>
 
       <div className="mb-4">
         <Select
@@ -65,7 +65,7 @@ export function GenerationTrigger() {
 
       <div className="mb-4">
         <div className="mb-2 flex items-center justify-between">
-          <span className="text-sm font-medium text-gray-300">{t("admin.selectPairs")}</span>
+          <span className="text-sm font-medium text-foreground">{t("admin.selectPairs")}</span>
           <button
             onClick={toggleAll}
             className="text-xs text-primary hover:underline"

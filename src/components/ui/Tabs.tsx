@@ -17,16 +17,16 @@ interface TabsProps {
 export function Tabs({ items, className, defaultIndex = 0 }: TabsProps) {
   return (
     <TabGroup defaultIndex={defaultIndex} className={className}>
-      <TabList className="flex gap-1 rounded-lg bg-dark-surface p-1">
+      <TabList className="flex gap-1 rounded-xl bg-dark-surface p-1">
         {items.map((item) => (
           <HeadlessTab
             key={item.label}
             className={({ selected }) =>
               cn(
-                "rounded-md px-4 py-2 text-sm font-medium transition-colors outline-none",
+                "rounded-lg px-4 py-2 text-sm font-medium transition-colors outline-none",
                 selected
-                  ? "bg-dark-card text-white shadow"
-                  : "text-gray-400 hover:text-gray-200 hover:bg-dark-hover"
+                  ? "bg-dark-card text-foreground shadow-card"
+                  : "text-muted-fg hover:text-foreground hover:bg-dark-hover"
               )
             }
           >

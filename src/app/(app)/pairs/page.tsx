@@ -16,7 +16,7 @@ export default function PairsPage() {
 
   const renderPairList = (pairs: readonly string[], title: string) => (
     <div className="mb-8">
-      <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500">{title}</h2>
+      <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-fg">{title}</h2>
       <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {pairs.map((pair) => {
           const access = accessMap[pair];
@@ -26,7 +26,7 @@ export default function PairsPage() {
             <button
               key={pair}
               className={cn(
-                "group relative w-full overflow-hidden rounded-lg border bg-dark-card p-4 text-left transition-all hover:shadow-md",
+                "group relative w-full overflow-hidden rounded-xl border bg-dark-card p-4 text-left transition-all hover:shadow-md",
                 hasAccess
                   ? "border-demand/20 hover:border-demand/30"
                   : "border-dark-border hover:border-dark-hover"
@@ -38,7 +38,7 @@ export default function PairsPage() {
               )}
 
               <div className="flex items-center justify-between">
-                <span className="font-mono text-lg font-bold text-white">
+                <span className="font-mono text-lg font-bold text-foreground">
                   {formatPair(pair)}
                 </span>
                 <Badge variant={hasAccess ? "status-active" : "status-locked"} className="text-[10px]">
@@ -46,7 +46,7 @@ export default function PairsPage() {
                 </Badge>
               </div>
               {hasAccess && access?.endDate && (
-                <p className="mt-1 text-[11px] text-gray-500">
+                <p className="mt-1 text-[11px] text-muted-fg">
                   {t("dashboard.until")} {new Date(access.endDate).toLocaleDateString()}
                 </p>
               )}
@@ -75,7 +75,7 @@ export default function PairsPage() {
       <div className="animate-fade-in space-y-6">
         <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 11 }).map((_, i) => (
-            <Skeleton key={i} className="h-[120px] rounded-lg" />
+            <Skeleton key={i} className="h-[120px] rounded-xl" />
           ))}
         </div>
       </div>

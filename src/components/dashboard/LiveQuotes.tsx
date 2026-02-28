@@ -75,28 +75,34 @@ export function LiveQuotes() {
   const hasQuotes = Object.keys(quoteMap).length > 0;
 
   return (
-    <div className="rounded-lg border border-dark-border bg-dark-card">
-      <div className="flex items-center justify-between border-b border-dark-border px-4 py-3">
-        <h3 className="text-sm font-semibold text-white">Live FX Rates</h3>
+    <div className="rounded-xl border border-dark-border bg-dark-card shadow-card">
+      <div className="flex items-center justify-between border-b border-dark-border px-5 py-3.5">
+        <div className="flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-foreground">Live FX Rates</h3>
+          <span className="flex h-2 w-2">
+            <span className="absolute inline-flex h-2 w-2 animate-pulse-dot rounded-full bg-demand opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-demand" />
+          </span>
+        </div>
         {updatedAt > 0 && (
-          <span className="text-[10px] text-gray-600">
+          <span className="text-[10px] text-subtle">
             {new Date(updatedAt * 1000).toLocaleTimeString()}
           </span>
         )}
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-2 gap-2 p-4 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 p-4 sm:grid-cols-3 lg:grid-cols-4">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="h-[72px] animate-pulse rounded-lg bg-dark-surface" />
+            <div key={i} className="h-[76px] animate-pulse rounded-xl bg-dark-surface" />
           ))}
         </div>
       ) : !hasQuotes ? (
-        <p className="px-4 py-8 text-center text-xs text-gray-600">
+        <p className="px-4 py-8 text-center text-xs text-subtle">
           Live quotes unavailable
         </p>
       ) : (
-        <div className="grid grid-cols-2 gap-2 p-3 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 p-4 sm:grid-cols-3 lg:grid-cols-4">
           {FX_PAIRS.map((pair) => {
             const q = quoteMap[pair];
             if (!q) return null;
@@ -109,7 +115,7 @@ export function LiveQuotes() {
                 key={pair}
                 href={`/reports/${pair}`}
                 className={cn(
-                  "group relative flex flex-col overflow-hidden rounded-lg border bg-dark-surface px-3 py-2.5 transition-all hover:scale-[1.02] hover:shadow-lg",
+                  "group relative flex flex-col overflow-hidden rounded-xl border bg-dark-surface px-3.5 py-3 transition-all hover:shadow-card-hover",
                   up ? "border-demand/20 hover:border-demand/40" : "border-supply/20 hover:border-supply/40"
                 )}
               >
@@ -122,7 +128,7 @@ export function LiveQuotes() {
                 />
 
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white">
+                  <span className="text-xs font-bold text-foreground">
                     {formatPair(pair)}
                   </span>
                   <span
@@ -142,11 +148,11 @@ export function LiveQuotes() {
                   </span>
                 </div>
 
-                <span className="mt-1 font-mono text-base font-bold text-white">
+                <span className="mt-1.5 font-mono text-base font-bold text-foreground">
                   {fmtPrice(pair, q.price)}
                 </span>
 
-                <div className="mt-1 flex justify-between text-[10px] text-gray-600">
+                <div className="mt-1.5 flex justify-between text-[10px] text-subtle">
                   <span>H {fmtPrice(pair, q.high)}</span>
                   <span>L {fmtPrice(pair, q.low)}</span>
                 </div>

@@ -52,9 +52,9 @@ export function PurchaseForm({ onPurchase }: PurchaseFormProps) {
   };
 
   return (
-    <div className="rounded-lg border border-dark-border bg-dark-card p-5">
-      <h3 className="mb-1 text-sm font-semibold text-white">{t("credits.purchase")}</h3>
-      <p className="mb-4 text-xs text-gray-500">{t("credits.purchaseDesc")}</p>
+    <div className="rounded-xl border border-dark-border bg-dark-card shadow-card p-5">
+      <h3 className="mb-1 text-sm font-semibold text-foreground">{t("credits.purchase")}</h3>
+      <p className="mb-4 text-xs text-muted-fg">{t("credits.purchaseDesc")}</p>
 
       {/* Preset cards */}
       <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -70,17 +70,17 @@ export function PurchaseForm({ onPurchase }: PurchaseFormProps) {
               "flex flex-col items-center rounded-lg border p-3 transition-all",
               !customMode && amount === amt
                 ? "border-primary bg-primary-light shadow-sm shadow-primary/10"
-                : "border-dark-border hover:border-gray-500"
+                : "border-dark-border hover:border-dark-border-hover"
             )}
           >
             <span className={cn(
               "text-2xl font-bold tabular-nums",
-              !customMode && amount === amt ? "text-primary" : "text-white"
+              !customMode && amount === amt ? "text-primary" : "text-foreground"
             )}>
               {amt}
             </span>
-            <span className="text-[11px] font-medium text-gray-400">{label}</span>
-            <span className="text-[10px] text-gray-600">{desc}</span>
+            <span className="text-[11px] font-medium text-muted-fg">{label}</span>
+            <span className="text-[10px] text-subtle">{desc}</span>
           </button>
         ))}
       </div>
@@ -92,7 +92,7 @@ export function PurchaseForm({ onPurchase }: PurchaseFormProps) {
           "mb-3 rounded-md border px-3 py-1.5 text-xs font-medium transition-colors",
           customMode
             ? "border-primary bg-primary-light text-primary"
-            : "border-dark-border text-gray-500 hover:text-gray-300"
+            : "border-dark-border text-muted-fg hover:text-foreground"
         )}
       >
         {t("credits.customAmount")}

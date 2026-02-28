@@ -58,9 +58,11 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="rounded-lg border border-dark-border bg-dark-card p-6 shadow-xl shadow-black/20">
-      <h2 className="mb-1 text-xl font-bold text-white">{t("auth.createAccount")}</h2>
-      <p className="mb-6 text-sm text-gray-500">{t("auth.createAccountDesc")}</p>
+    <div className="overflow-hidden rounded-2xl border border-dark-border bg-dark-card shadow-xl shadow-black/20">
+      <div className="h-1 rounded-t-2xl bg-gradient-to-r from-blue-500 to-indigo-500" />
+      <div className="p-6">
+      <h2 className="mb-1 text-xl font-bold text-foreground">{t("auth.createAccount")}</h2>
+      <p className="mb-6 text-sm text-muted-fg">{t("auth.createAccountDesc")}</p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
@@ -105,12 +107,13 @@ export default function RegisterPage() {
         </Button>
       </form>
 
-      <p className="mt-4 text-center text-sm text-gray-500">
+      <p className="mt-4 text-center text-sm text-muted-fg">
         {t("auth.hasAccount")}{" "}
         <Link href="/login" className="text-primary hover:underline">
           {t("auth.loginLink")}
         </Link>
       </p>
+      </div>
     </div>
   );
 }

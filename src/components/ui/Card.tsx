@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   padding?: "default" | "compact" | "none";
+  hover?: boolean;
   children: React.ReactNode;
 }
 
@@ -25,11 +26,12 @@ const paddingClasses = {
   none: "p-0",
 };
 
-export function Card({ className, padding = "default", children, ...props }: CardProps) {
+export function Card({ className, padding = "default", hover, children, ...props }: CardProps) {
   return (
     <div
       className={cn(
-        "rounded-lg border border-dark-border bg-dark-card",
+        "rounded-xl border border-dark-border bg-dark-card shadow-card",
+        hover && "transition-shadow hover:shadow-card-hover hover:border-dark-border-hover",
         paddingClasses[padding],
         className
       )}
@@ -51,7 +53,7 @@ export function CardHeader({ className, title, action, children }: CardHeaderPro
 
   return (
     <div className={cn("mb-4 flex items-center justify-between", className)}>
-      {title && <h3 className="text-lg font-semibold text-white">{title}</h3>}
+      {title && <h3 className="text-lg font-semibold text-foreground">{title}</h3>}
       {action && <div>{action}</div>}
     </div>
   );

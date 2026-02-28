@@ -22,32 +22,44 @@ export function RecentReports() {
       .finally(() => setLoading(false));
   }, []);
 
-  const stateVariant = (state: string | null): "success" | "warning" | "info" | "default" => {
+  const stateVariant = (state: string | null): "success" | "warning" | "danger" | "info" | "default" => {
     if (!state) return "default";
     const s = state.toLowerCase();
     if (s.includes("bull") || s.includes("up")) return "success";
-    if (s.includes("bear") || s.includes("down")) return "danger" as "warning";
+    if (s.includes("bear") || s.includes("down")) return "danger";
     if (s.includes("range") || s.includes("consol")) return "warning";
     return "info";
   };
 
+  const stateDotColor = (state: string | null): string => {
+    if (!state) return "bg-subtle";
+    const s = state.toLowerCase();
+    if (s.includes("bull") || s.includes("up")) return "bg-demand";
+    if (s.includes("bear") || s.includes("down")) return "bg-supply";
+    if (s.includes("range") || s.includes("consol")) return "bg-amber-400";
+    return "bg-blue-400";
+  };
+
   return (
-    <div className="rounded-lg border border-dark-border bg-dark-card">
-      <div className="flex items-center justify-between border-b border-dark-border px-4 py-3">
-        <h3 className="text-sm font-semibold text-white">{t("nav.reports")}</h3>
-        <span className="text-[10px] text-gray-600">
-          {new Date().toLocaleDateString(undefined, { month: "short", day: "numeric" })}
-        </span>
+    <div className="rounded-xl border border-dark-border bg-dark-card shadow-card">
+      <div className="flex items-center justify-between border-b border-dark-border px-5 py-3.5">
+        <h3 className="text-sm font-semibold text-foreground">{t("nav.reports")}</h3>
+        <Link
+          href="/reports"
+          className="text-xs font-medium text-primary hover:text-primary-hover"
+        >
+          {t("common.viewAll")}
+        </Link>
       </div>
 
       {loading ? (
         <div className="space-y-2 p-4">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-10 animate-pulse rounded bg-dark-surface" />
+            <div key={i} className="h-11 animate-pulse rounded-lg bg-dark-surface" />
           ))}
         </div>
       ) : items.length === 0 ? (
-        <p className="px-4 py-6 text-center text-xs text-gray-600">
+        <p className="px-4 py-6 text-center text-xs text-subtle">
           {t("common.noData")}
         </p>
       ) : (
@@ -56,10 +68,11 @@ export function RecentReports() {
             <Link
               key={r.id}
               href={`/reports/${r.pair}/${r.id}`}
-              className="flex items-center justify-between px-4 py-2.5 transition-colors hover:bg-dark-hover"
+              className="flex items-center justify-between px-5 py-3 transition-colors hover:bg-dark-hover"
             >
               <div className="flex items-center gap-3">
-                <span className="font-mono text-sm font-semibold text-white">
+                <span className={cn("h-2 w-2 shrink-0 rounded-full", stateDotColor(r.market_state))} />
+                <span className="font-mono text-sm font-semibold text-foreground">
                   {formatPair(r.pair)}
                 </span>
                 {r.market_state && (
@@ -68,7 +81,7 @@ export function RecentReports() {
                   </Badge>
                 )}
               </div>
-              <svg className="h-4 w-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="h-4 w-4 text-subtle" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
               </svg>
             </Link>

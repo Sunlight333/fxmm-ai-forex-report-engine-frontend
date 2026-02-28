@@ -84,7 +84,7 @@ export const auth = {
 export const user = {
   me: () => request<User>("/user/me"),
 
-  update: (data: { language?: string; selected_pairs?: string[] }) =>
+  update: (data: { language?: string; selected_pairs?: string[]; theme?: string }) =>
     request<User>("/user/me", {
       method: "PATCH",
       body: JSON.stringify(data),

@@ -23,7 +23,7 @@ export function UserTable({ users, loading, onCreditAdjust }: UserTableProps) {
     {
       key: "email",
       header: t("admin.email"),
-      render: (u: User) => <span className="text-white">{u.email}</span>,
+      render: (u: User) => <span className="text-foreground">{u.email}</span>,
     },
     {
       key: "tier",
@@ -43,13 +43,13 @@ export function UserTable({ users, loading, onCreditAdjust }: UserTableProps) {
       key: "admin",
       header: t("admin.isAdmin"),
       render: (u: User) =>
-        u.is_admin ? <Badge variant="warning">Admin</Badge> : <span className="text-gray-500">—</span>,
+        u.is_admin ? <Badge variant="warning">Admin</Badge> : <span className="text-subtle">—</span>,
     },
     {
       key: "joined",
       header: t("admin.joined"),
       render: (u: User) => (
-        <span className="text-gray-500">
+        <span className="text-subtle">
           {format(new Date(u.created_at), "MMM d, yyyy")}
         </span>
       ),

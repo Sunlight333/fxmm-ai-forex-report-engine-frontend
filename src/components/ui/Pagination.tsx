@@ -43,7 +43,7 @@ export function Pagination({ page, totalPages, onPageChange, className }: Pagina
 
       {pages.map((p, i) =>
         p === "..." ? (
-          <span key={`dots-${i}`} className="px-2 text-gray-500">
+          <span key={`dots-${i}`} className="px-2 text-muted-fg">
             ...
           </span>
         ) : (
@@ -54,8 +54,8 @@ export function Pagination({ page, totalPages, onPageChange, className }: Pagina
             className={cn(
               "h-8 w-8 rounded-lg text-sm font-medium transition-colors",
               p === page
-                ? "bg-primary text-white"
-                : "text-gray-400 hover:bg-dark-hover"
+                ? "bg-primary text-foreground"
+                : "text-muted-fg hover:bg-dark-hover"
             )}
           >
             {p}

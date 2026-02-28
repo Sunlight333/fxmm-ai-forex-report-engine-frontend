@@ -30,7 +30,7 @@ export default function CreditsPage() {
 
         <div className="lg:col-span-2">
           {loading ? (
-            <Skeleton className="h-[300px] rounded-lg" />
+            <Skeleton className="h-[300px] rounded-xl" />
           ) : (
             <TransactionList transactions={data?.transactions || []} />
           )}

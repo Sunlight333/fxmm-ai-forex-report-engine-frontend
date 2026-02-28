@@ -34,7 +34,7 @@ export function Modal({ open, onClose, title, children, size = "md", className }
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/60" aria-hidden="true" />
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" aria-hidden="true" />
         </TransitionChild>
 
         <div className="fixed inset-0 flex items-center justify-center p-4">
@@ -49,13 +49,13 @@ export function Modal({ open, onClose, title, children, size = "md", className }
           >
             <DialogPanel
               className={cn(
-                "w-full rounded-xl border border-dark-border bg-dark-card p-6 shadow-2xl",
+                "w-full rounded-2xl border border-dark-border bg-elevated p-6 shadow-2xl",
                 sizeClasses[size],
                 className
               )}
             >
               {title && (
-                <h3 className="mb-4 text-lg font-semibold text-white">
+                <h3 className="mb-4 text-lg font-semibold text-foreground">
                   {title}
                 </h3>
               )}

@@ -80,8 +80,8 @@ export default function AdminOverviewPage() {
 
       {/* Quick actions + Health */}
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-lg border border-dark-border bg-dark-card p-5">
-          <h3 className="mb-4 text-sm font-semibold text-white">Quick Actions</h3>
+        <div className="rounded-xl border border-dark-border bg-dark-card p-5 shadow-card">
+          <h3 className="mb-4 text-sm font-semibold text-foreground">Quick Actions</h3>
           <div className="grid grid-cols-2 gap-2">
             {quickActions.map(({ key, href, icon, labelKey }) => (
               <Link
@@ -94,7 +94,7 @@ export default function AdminOverviewPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" d={icon} />
                   </svg>
                 </div>
-                <span className="text-xs font-medium text-gray-300">{t(labelKey)}</span>
+                <span className="text-xs font-medium text-foreground">{t(labelKey)}</span>
               </Link>
             ))}
           </div>

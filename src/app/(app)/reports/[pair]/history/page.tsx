@@ -39,7 +39,7 @@ export default function ReportHistoryPage() {
       {loading ? (
         <div className="space-y-3">
           {Array.from({ length: 5 }).map((_, i) => (
-            <Skeleton key={i} className="h-20 rounded-lg" />
+            <Skeleton key={i} className="h-20 rounded-xl" />
           ))}
         </div>
       ) : !data || data.length === 0 ? (
@@ -64,19 +64,19 @@ export default function ReportHistoryPage() {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <span className="text-sm font-medium text-white">
+                    <span className="text-sm font-medium text-foreground">
                       {format(new Date(report.date), "MMMM d, yyyy")}
                     </span>
                     {report.market_state && (
                       <Badge variant="primary">{report.market_state}</Badge>
                     )}
                   </div>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-muted-fg">
                     {format(new Date(report.created_at), "HH:mm")}
                   </span>
                 </div>
                 {report.executive_summary && (
-                  <p className="mt-2 text-sm text-gray-400">
+                  <p className="mt-2 text-sm text-muted-fg">
                     {truncate(report.executive_summary, 200)}
                   </p>
                 )}

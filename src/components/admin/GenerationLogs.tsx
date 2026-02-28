@@ -32,14 +32,14 @@ export function GenerationLogs() {
       key: "pair",
       header: t("credits.pair"),
       render: (log: GenerationLog) => (
-        <span className="font-mono text-white">{formatPair(log.pair)}</span>
+        <span className="font-mono text-foreground">{formatPair(log.pair)}</span>
       ),
     },
     {
       key: "date",
       header: t("admin.runDate"),
       render: (log: GenerationLog) => (
-        <span className="text-gray-400">{log.run_date}</span>
+        <span className="text-muted-fg">{log.run_date}</span>
       ),
     },
     {
@@ -55,7 +55,7 @@ export function GenerationLogs() {
       key: "duration",
       header: t("admin.duration"),
       render: (log: GenerationLog) => (
-        <span className="font-mono text-gray-400">
+        <span className="font-mono text-muted-fg">
           {log.duration_ms ? `${(log.duration_ms / 1000).toFixed(1)}s` : "—"}
         </span>
       ),
@@ -64,7 +64,7 @@ export function GenerationLogs() {
       key: "created",
       header: "Created",
       render: (log: GenerationLog) => (
-        <span className="text-gray-500 text-xs">
+        <span className="text-subtle text-xs">
           {format(new Date(log.created_at), "MMM d, HH:mm")}
         </span>
       ),

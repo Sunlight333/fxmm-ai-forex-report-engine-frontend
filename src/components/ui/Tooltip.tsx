@@ -24,7 +24,7 @@ export function Tooltip({ content, children, className }: TooltipProps) {
       {visible && (
         <div
           role="tooltip"
-          className="absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 whitespace-nowrap rounded-md bg-dark-surface border border-dark-border px-2.5 py-1 text-xs text-gray-300 shadow-lg animate-fade-in"
+          className="absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg bg-elevated border border-dark-border px-2.5 py-1.5 text-xs text-foreground shadow-lg animate-fade-in"
         >
           {content}
           <div className="absolute left-1/2 top-full -translate-x-1/2 border-4 border-transparent border-t-dark-surface" />

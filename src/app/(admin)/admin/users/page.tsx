@@ -16,7 +16,7 @@ export default function AdminUsersPage() {
 
   return (
     <div className="animate-fade-in">
-      <div className="overflow-hidden rounded-lg border border-dark-border bg-dark-card">
+      <div className="overflow-hidden rounded-xl border border-dark-border bg-dark-card shadow-card">
         <UserTable
           users={users || []}
           loading={loading}

@@ -23,7 +23,7 @@ export function SystemHealthCard() {
       ) : error ? (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-400">{t("admin.apiHealth")}</span>
+            <span className="text-sm text-muted-fg">{t("admin.apiHealth")}</span>
             <Badge variant="danger">Offline</Badge>
           </div>
           <p className="text-xs text-supply">{error}</p>
@@ -31,13 +31,13 @@ export function SystemHealthCard() {
       ) : (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-400">{t("admin.apiHealth")}</span>
+            <span className="text-sm text-muted-fg">{t("admin.apiHealth")}</span>
             <Badge variant={data?.status === "ok" ? "success" : "danger"}>
               {data?.status === "ok" ? "Online" : "Error"}
             </Badge>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-400">{t("admin.dbStatus")}</span>
+            <span className="text-sm text-muted-fg">{t("admin.dbStatus")}</span>
             <Badge variant={data?.database === "connected" ? "success" : "danger"}>
               {data?.database === "connected" ? t("admin.connected") : "Disconnected"}
             </Badge>

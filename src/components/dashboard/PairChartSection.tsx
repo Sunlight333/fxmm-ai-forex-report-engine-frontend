@@ -54,9 +54,9 @@ export function PairChartSection({ subscribedPairs, loading: subsLoading }: Pair
 
   if (subsLoading) {
     return (
-      <div className="rounded-lg border border-dark-border bg-dark-card">
-        <div className="border-b border-dark-border px-4 py-3">
-          <h3 className="text-sm font-semibold text-white">Report Charts</h3>
+      <div className="rounded-xl border border-dark-border bg-dark-card shadow-card">
+        <div className="border-b border-dark-border px-5 py-3.5">
+          <h3 className="text-sm font-semibold text-foreground">Report Charts</h3>
         </div>
         <div className="p-4"><SkeletonChart /></div>
       </div>
@@ -65,11 +65,11 @@ export function PairChartSection({ subscribedPairs, loading: subsLoading }: Pair
 
   if (subscribedPairs.length === 0) {
     return (
-      <div className="rounded-lg border border-dark-border bg-dark-card">
-        <div className="border-b border-dark-border px-4 py-3">
-          <h3 className="text-sm font-semibold text-white">Report Charts</h3>
+      <div className="rounded-xl border border-dark-border bg-dark-card shadow-card">
+        <div className="border-b border-dark-border px-5 py-3.5">
+          <h3 className="text-sm font-semibold text-foreground">Report Charts</h3>
         </div>
-        <p className="px-4 py-8 text-center text-xs text-gray-600">
+        <p className="px-4 py-8 text-center text-xs text-subtle">
           Unlock a pair to view its analysis charts
         </p>
       </div>
@@ -81,10 +81,10 @@ export function PairChartSection({ subscribedPairs, loading: subsLoading }: Pair
   const activeTabInfo = CHART_TABS.find((t) => t.field === activeTab)!;
 
   return (
-    <div className="rounded-lg border border-dark-border bg-dark-card">
+    <div className="rounded-xl border border-dark-border bg-dark-card shadow-card">
       {/* Header with pair pills inline */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-dark-border px-4 py-3">
-        <h3 className="mr-2 text-sm font-semibold text-white">Report Charts</h3>
+      <div className="flex flex-wrap items-center gap-2 border-b border-dark-border px-5 py-3.5">
+        <h3 className="mr-2 text-sm font-semibold text-foreground">Report Charts</h3>
         {subscribedPairs.map((pair) => (
           <button
             key={pair}
@@ -93,31 +93,31 @@ export function PairChartSection({ subscribedPairs, loading: subsLoading }: Pair
               setActiveTab("chart_file_url");
             }}
             className={cn(
-              "rounded-md px-2 py-0.5 text-[11px] font-semibold transition-colors",
+              "rounded-lg px-2.5 py-1 text-[11px] font-semibold transition-colors",
               selectedPair === pair
                 ? "bg-primary text-white"
-                : "bg-dark-surface text-gray-500 hover:bg-dark-hover hover:text-gray-300"
+                : "bg-dark-surface text-muted-fg hover:bg-dark-hover hover:text-foreground"
             )}
           >
             {formatPair(pair)}
           </button>
         ))}
         {report && (
-          <span className="ml-auto text-[10px] text-gray-600">{report.date}</span>
+          <span className="ml-auto text-[10px] text-subtle">{report.date}</span>
         )}
       </div>
 
-      {/* Chart type tabs */}
-      <div className="flex border-b border-dark-border">
+      {/* Chart type tabs — pill style */}
+      <div className="flex gap-1 border-b border-dark-border px-5 py-2">
         {CHART_TABS.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.field)}
             className={cn(
-              "px-4 py-2 text-xs font-medium transition-colors",
+              "rounded-lg px-3 py-1.5 text-xs font-medium transition-colors",
               activeTab === tab.field
-                ? "border-b-2 border-primary text-primary"
-                : "text-gray-500 hover:text-gray-300"
+                ? "bg-primary-light text-primary"
+                : "text-muted-fg hover:bg-dark-hover hover:text-foreground"
             )}
           >
             {tab.label}
@@ -130,8 +130,8 @@ export function PairChartSection({ subscribedPairs, loading: subsLoading }: Pair
         {isLoading ? (
           <SkeletonChart />
         ) : error && !report ? (
-          <div className="flex aspect-video items-center justify-center rounded-lg border border-dark-border bg-dark-surface">
-            <p className="text-sm text-gray-500">{error}</p>
+          <div className="flex aspect-video items-center justify-center rounded-xl border border-dark-border bg-dark-surface">
+            <p className="text-sm text-muted-fg">{error}</p>
           </div>
         ) : report ? (
           <ChartImage

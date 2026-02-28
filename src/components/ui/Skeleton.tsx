@@ -10,7 +10,7 @@ export function Skeleton({ className }: SkeletonProps) {
   return (
     <div
       className={cn(
-        "animate-skeleton-pulse rounded bg-dark-border/50",
+        "animate-skeleton-pulse rounded-lg bg-dark-border/50",
         className
       )}
     />
@@ -34,7 +34,7 @@ export function SkeletonCard({ className }: SkeletonProps) {
   return (
     <div
       className={cn(
-        "rounded-lg border border-dark-border bg-dark-card p-6",
+        "rounded-xl border border-dark-border bg-dark-card p-6 shadow-card",
         className
       )}
     >
@@ -47,7 +47,7 @@ export function SkeletonCard({ className }: SkeletonProps) {
 export function SkeletonChart({ className }: SkeletonProps) {
   return (
     <Skeleton
-      className={cn("aspect-video rounded-lg", className)}
+      className={cn("aspect-video rounded-xl", className)}
     />
   );
 }

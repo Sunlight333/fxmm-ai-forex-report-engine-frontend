@@ -16,7 +16,7 @@ export default function ApiStatusPage() {
 
   return (
     <div className="animate-fade-in">
-      <p className="mb-4 text-xs text-gray-500">{t("admin.apiStatusDesc")}</p>
+      <p className="mb-4 text-xs text-muted-fg">{t("admin.apiStatusDesc")}</p>
 
       {loading ? (
         <div className="flex justify-center py-12">

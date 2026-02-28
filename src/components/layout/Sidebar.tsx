@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
+import { useTheme } from "@/lib/theme-context";
 import { useT } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
@@ -122,9 +123,15 @@ interface SidebarProps {
 
 export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const { user, logout } = useAuth();
+  const { theme, setTheme } = useTheme();
   const { t } = useT();
   const pathname = usePathname();
   const router = useRouter();
+
+  const cycleTheme = () => {
+    const next = theme === "dark" ? "light" : theme === "light" ? "system" : "dark";
+    setTheme(next);
+  };
 
   const handleLogout = () => {
     logout();
@@ -139,17 +146,39 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const navContent = (
     <div className="flex h-full flex-col">
       {/* Logo */}
-      <div className="flex h-14 items-center gap-2.5 border-b border-dark-border px-5">
+      <div className="flex h-16 items-center gap-2.5 px-5">
         <Link href="/dashboard" className="flex items-center gap-2.5" onClick={onClose}>
-          <span className="text-lg font-bold tracking-tight text-white">FXMM</span>
-          <span className="text-[11px] font-medium uppercase tracking-widest text-gray-500">
-            {t("nav.tagline")}
-          </span>
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500">
+            <span className="text-sm font-bold text-white">FX</span>
+          </div>
+          <div>
+            <span className="text-base font-bold tracking-tight text-foreground">FXMM</span>
+          </div>
         </Link>
       </div>
 
+      {/* User profile section at top */}
+      {user && (
+        <div className="mx-3 mb-4 rounded-xl bg-dark-hover/50 px-3 py-3">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-xs font-bold text-white">
+              {user.email.charAt(0).toUpperCase()}
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <p className="truncate text-sm font-medium text-foreground">{user.email}</p>
+              <Badge
+                variant={user.tier === "professional" ? "tier-professional" : "tier-retail"}
+                className="mt-0.5 text-[10px]"
+              >
+                {user.tier}
+              </Badge>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Main navigation */}
-      <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4">
+      <nav className="flex-1 space-y-1 overflow-y-auto px-3">
         {mainNav.map(({ key, href, Icon }) => {
           const active = isActive(href);
           return (
@@ -158,13 +187,13 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
               href={href}
               onClick={onClose}
               className={cn(
-                "group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all",
+                "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] font-medium transition-all",
                 active
-                  ? "border-l-2 border-primary bg-primary-light text-white"
-                  : "border-l-2 border-transparent text-gray-400 hover:bg-dark-hover hover:text-white"
+                  ? "bg-primary-light text-primary"
+                  : "text-muted-fg hover:bg-dark-hover hover:text-foreground"
               )}
             >
-              <Icon className="h-[18px] w-[18px] shrink-0" />
+              <Icon className="h-5 w-5 shrink-0" />
               {t(`nav.${key}`)}
             </Link>
           );
@@ -173,10 +202,11 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
         {/* Admin section */}
         {user?.is_admin && (
           <>
-            <div className="my-3 border-t border-dark-border" />
-            <p className="mb-1.5 px-3 text-[10px] font-semibold uppercase tracking-widest text-gray-600">
-              {t("nav.admin")}
-            </p>
+            <div className="pb-1 pt-4">
+              <p className="px-3 text-[10px] font-semibold uppercase tracking-widest text-subtle">
+                {t("nav.admin")}
+              </p>
+            </div>
             {adminNav.map(({ key, href, Icon, exact }) => {
               const active = isActive(href, exact);
               return (
@@ -185,13 +215,13 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
                   href={href}
                   onClick={onClose}
                   className={cn(
-                    "group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all",
+                    "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] font-medium transition-all",
                     active
-                      ? "border-l-2 border-primary bg-primary-light text-white"
-                      : "border-l-2 border-transparent text-gray-400 hover:bg-dark-hover hover:text-white"
+                      ? "bg-primary-light text-primary"
+                      : "text-muted-fg hover:bg-dark-hover hover:text-foreground"
                   )}
                 >
-                  <Icon className="h-[18px] w-[18px] shrink-0" />
+                  <Icon className="h-5 w-5 shrink-0" />
                   {t(`nav.${key}`)}
                 </Link>
               );
@@ -200,36 +230,39 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
         )}
       </nav>
 
-      {/* User section at bottom */}
-      {user && (
-        <div className="border-t border-dark-border p-3">
-          <div className="flex items-center gap-3 rounded-lg px-2 py-2">
-            {/* Avatar circle */}
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/20 text-xs font-bold text-primary">
-              {user.email.charAt(0).toUpperCase()}
-            </div>
-            <div className="flex-1 overflow-hidden">
-              <p className="truncate text-sm font-medium text-white">{user.email}</p>
-              <div className="flex items-center gap-2">
-                <Badge
-                  variant={user.tier === "professional" ? "tier-professional" : "tier-retail"}
-                  className="text-[10px]"
-                >
-                  {user.tier}
-                </Badge>
-              </div>
-            </div>
-          </div>
+      {/* Bottom section: theme + logout */}
+      <div className="border-t border-dark-border p-3">
+        <div className="flex items-center gap-1">
+          <button
+            onClick={cycleTheme}
+            className="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-muted-fg transition-colors hover:bg-dark-hover hover:text-foreground"
+            title={`Theme: ${theme}`}
+          >
+            {theme === "dark" ? (
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+              </svg>
+            ) : theme === "light" ? (
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+              </svg>
+            ) : (
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+              </svg>
+            )}
+            {t(`settings.theme${theme.charAt(0).toUpperCase() + theme.slice(1)}`)}
+          </button>
 
           <button
             onClick={handleLogout}
-            className="mt-1 flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-400 transition-colors hover:bg-dark-hover hover:text-white"
+            className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-muted-fg transition-colors hover:bg-dark-hover hover:text-foreground"
+            title={t("nav.logout")}
           >
-            <IconLogout className="h-[18px] w-[18px]" />
-            {t("nav.logout")}
+            <IconLogout className="h-4 w-4" />
           </button>
         </div>
-      )}
+      </div>
     </div>
   );
 
@@ -244,7 +277,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
       {mobileOpen && (
         <>
           <div
-            className="fixed inset-0 z-40 bg-black/60 lg:hidden"
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
             onClick={onClose}
           />
           <aside className="fixed inset-y-0 left-0 z-50 w-sidebar animate-slide-in-left border-r border-dark-border bg-dark-surface lg:hidden">

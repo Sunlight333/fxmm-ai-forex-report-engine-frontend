@@ -45,20 +45,15 @@ export function PairCard({ pair, hasAccess, endDate, creditBalance, onUnlock }: 
     <>
       <div
         className={cn(
-          "group relative flex flex-col justify-between overflow-hidden rounded-lg border bg-dark-card p-4 transition-all hover:shadow-md",
+          "group relative flex flex-col justify-between overflow-hidden rounded-xl border bg-dark-card p-4 shadow-card transition-all hover:shadow-card-hover",
           hasAccess
-            ? "border-demand/20 hover:border-demand/30"
-            : "border-dark-border hover:border-dark-hover"
+            ? "border-l-[3px] border-demand/30 border-l-demand"
+            : "border-dark-border"
         )}
       >
-        {/* Active accent */}
-        {hasAccess && (
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-demand" />
-        )}
-
         <div>
           <div className="flex items-center justify-between">
-            <span className="font-mono text-base font-bold text-white">
+            <span className="font-mono text-base font-bold text-foreground">
               {formatPair(pair)}
             </span>
             <Badge
@@ -69,7 +64,7 @@ export function PairCard({ pair, hasAccess, endDate, creditBalance, onUnlock }: 
             </Badge>
           </div>
           {hasAccess && endDate && (
-            <p className="mt-1 text-[11px] text-gray-500">
+            <p className="mt-1 text-[11px] text-muted-fg">
               {t("dashboard.until")} {new Date(endDate).toLocaleDateString()}
             </p>
           )}

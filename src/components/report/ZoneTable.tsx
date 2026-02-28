@@ -34,16 +34,16 @@ export function ZoneTable({ zones, pair, type }: ZoneTableProps) {
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-dark-border">
-            <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">
+            <th className="px-3 py-2 text-left text-xs font-medium uppercase text-muted-fg">
               {t("zones.priceRange")}
             </th>
-            <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">
+            <th className="px-3 py-2 text-left text-xs font-medium uppercase text-muted-fg">
               {t("zones.confluence")}
             </th>
-            <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">
+            <th className="px-3 py-2 text-left text-xs font-medium uppercase text-muted-fg">
               {t("zones.status")}
             </th>
-            <th className="px-3 py-2 text-left text-xs font-medium uppercase text-gray-500">
+            <th className="px-3 py-2 text-left text-xs font-medium uppercase text-muted-fg">
               {t("zones.tests")}
             </th>
           </tr>
@@ -59,7 +59,7 @@ export function ZoneTable({ zones, pair, type }: ZoneTableProps) {
                       type === "demand" ? "bg-demand" : "bg-supply"
                     )}
                   />
-                  <span className="font-mono text-white">
+                  <span className="font-mono text-foreground">
                     {formatPrice(zone.price_lower, pair)} – {formatPrice(zone.price_upper, pair)}
                   </span>
                 </div>
@@ -77,7 +77,7 @@ export function ZoneTable({ zones, pair, type }: ZoneTableProps) {
                   {t(`zones.${zone.status}` as `zones.${string}`) || zone.status}
                 </Badge>
               </td>
-              <td className="px-3 py-2 text-center font-mono text-gray-400">
+              <td className="px-3 py-2 text-center font-mono text-muted-fg">
                 {zone.test_count}
               </td>
             </tr>

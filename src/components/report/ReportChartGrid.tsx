@@ -28,7 +28,7 @@ export function ReportChartGrid({ report }: ReportChartGridProps) {
   const activeItem = CHART_ITEMS.find((c) => c.key === activeChart)!;
 
   return (
-    <div className="overflow-hidden rounded-lg border border-dark-border bg-dark-card">
+    <div className="overflow-hidden rounded-xl border border-dark-border bg-dark-card shadow-card">
       {/* Tab bar */}
       <div className="flex border-b border-dark-border">
         {CHART_ITEMS.map((item) => {
@@ -43,8 +43,8 @@ export function ReportChartGrid({ report }: ReportChartGridProps) {
                 activeChart === item.key
                   ? "border-b-2 border-primary bg-primary-light text-primary"
                   : hasChart
-                    ? "text-gray-500 hover:text-gray-300 hover:bg-dark-surface/30"
-                    : "cursor-not-allowed text-gray-700"
+                    ? "text-muted-fg hover:text-foreground hover:bg-dark-surface/30"
+                    : "cursor-not-allowed text-subtle"
               )}
             >
               <svg className="h-3.5 w-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">

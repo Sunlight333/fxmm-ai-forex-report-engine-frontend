@@ -51,8 +51,8 @@ export function CreditAdjustModal({ user, open, onClose, onSuccess }: CreditAdju
     <Modal open={open} onClose={onClose} title={`${t("admin.adjustCredits")} — ${user.email}`}>
       <div className="space-y-4">
         <div>
-          <p className="text-sm text-gray-500">
-            Current balance: <span className="font-mono text-white">{user.credit_balance}</span>
+          <p className="text-sm text-muted-fg">
+            Current balance: <span className="font-mono text-foreground">{user.credit_balance}</span>
           </p>
         </div>
 

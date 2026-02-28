@@ -14,8 +14,8 @@ export default function AuthLayout({
       <div className="relative w-full max-w-md">
         {/* Logo */}
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-white">FXMM</h1>
-          <p className="mt-1 text-sm text-gray-500">AI Forex Report Engine</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">FXMM</h1>
+          <p className="mt-1 text-sm text-muted-fg">AI Forex Report Engine</p>
         </div>
         {children}
       </div>

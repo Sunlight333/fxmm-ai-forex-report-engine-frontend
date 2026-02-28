@@ -88,8 +88,8 @@ export default function ReportPage() {
     if (error.includes("403") || error.includes("access") || error.includes("subscription")) {
       return (
         <Card className="mx-auto mt-12 max-w-md text-center">
-          <h2 className="mb-2 text-lg font-semibold text-white">{formatPair(pair)}</h2>
-          <p className="mb-4 text-sm text-gray-400">{t("report.accessDenied")}</p>
+          <h2 className="mb-2 text-lg font-semibold text-foreground">{formatPair(pair)}</h2>
+          <p className="mb-4 text-sm text-muted-fg">{t("report.accessDenied")}</p>
           <Link href="/credits">
             <Button variant="primary">{t("report.unlockNow")}</Button>
           </Link>
@@ -100,8 +100,8 @@ export default function ReportPage() {
     if (error.includes("404") || error.includes("No report") || error.includes("not found")) {
       return (
         <Card className="mx-auto mt-12 max-w-md text-center">
-          <h2 className="mb-2 text-lg font-semibold text-white">{formatPair(pair)}</h2>
-          <p className="mb-4 text-sm text-gray-400">{t("report.noReport")}</p>
+          <h2 className="mb-2 text-lg font-semibold text-foreground">{formatPair(pair)}</h2>
+          <p className="mb-4 text-sm text-muted-fg">{t("report.noReport")}</p>
           {genError && (
             <p className="mb-4 text-sm text-red-400">{genError}</p>
           )}
@@ -124,7 +124,7 @@ export default function ReportPage() {
     <div className="animate-fade-in">
       {(isStale || hasNoCharts) && (
         <Card className="mb-4 flex items-center justify-between">
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-muted-fg">
             {isStale
               ? t("report.staleReport")
               : t("report.missingCharts")}

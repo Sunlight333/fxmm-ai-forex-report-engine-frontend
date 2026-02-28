@@ -15,13 +15,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantClasses: Record<Variant, string> = {
   primary:
-    "bg-primary text-white hover:bg-primary-hover active:bg-primary-hover/90",
+    "bg-primary text-white shadow-sm hover:bg-primary-hover active:bg-primary-hover/90",
   secondary:
-    "border border-dark-border text-gray-200 hover:bg-dark-hover active:bg-dark-hover/90",
+    "border border-dark-border text-foreground hover:bg-dark-hover hover:border-dark-border-hover active:bg-dark-hover/90",
   danger:
     "bg-supply text-white hover:bg-supply/90 active:bg-supply/80",
   ghost:
-    "text-gray-300 hover:bg-dark-hover active:bg-dark-hover/90",
+    "text-foreground hover:bg-dark-hover active:bg-dark-hover/90",
   demand:
     "bg-demand text-white hover:bg-demand/90 active:bg-demand/80",
   supply:
@@ -42,7 +42,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         aria-disabled={disabled || loading || undefined}
         className={cn(
-          "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors",
+          "inline-flex items-center justify-center gap-2 rounded-xl font-medium",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-dark-bg",
           "disabled:opacity-50 disabled:cursor-not-allowed",
           variantClasses[variant],

@@ -32,19 +32,19 @@ export function TransactionList({ transactions }: TransactionListProps) {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-dark-border">
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase text-muted-fg">
                   {t("credits.date")}
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase text-muted-fg">
                   {t("credits.type")}
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium uppercase text-gray-500">
+                <th className="px-6 py-3 text-right text-xs font-medium uppercase text-muted-fg">
                   {t("credits.amount")}
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium uppercase text-gray-500">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase text-muted-fg">
                   {t("credits.pair")}
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium uppercase text-gray-500">
+                <th className="px-6 py-3 text-right text-xs font-medium uppercase text-muted-fg">
                   {t("credits.balanceAfter")}
                 </th>
               </tr>
@@ -52,7 +52,7 @@ export function TransactionList({ transactions }: TransactionListProps) {
             <tbody className="divide-y divide-dark-border">
               {transactions.map((tx) => (
                 <tr key={tx.id} className="hover:bg-dark-hover transition-colors">
-                  <td className="px-6 py-3 text-gray-400">
+                  <td className="px-6 py-3 text-muted-fg">
                     {format(new Date(tx.created_at), "MMM d, yyyy HH:mm")}
                   </td>
                   <td className="px-6 py-3">
@@ -66,10 +66,10 @@ export function TransactionList({ transactions }: TransactionListProps) {
                   )}>
                     {tx.amount > 0 ? "+" : ""}{tx.amount}
                   </td>
-                  <td className="px-6 py-3 font-mono text-gray-400">
+                  <td className="px-6 py-3 font-mono text-muted-fg">
                     {tx.pair ? formatPair(tx.pair) : "—"}
                   </td>
-                  <td className="px-6 py-3 text-right font-mono text-gray-300">
+                  <td className="px-6 py-3 text-right font-mono text-foreground">
                     {tx.balance_after}
                   </td>
                 </tr>

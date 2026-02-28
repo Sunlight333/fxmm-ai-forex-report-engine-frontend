@@ -56,8 +56,8 @@ export function SectionNavigation({ availableSections }: SectionNavigationProps)
   const filteredKeys = SECTION_KEYS.filter((k) => availableSections.includes(k));
 
   return (
-    <nav className="rounded-lg border border-dark-border bg-dark-card p-2" aria-label="Report sections">
-      <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-widest text-gray-600">
+    <nav className="rounded-xl border border-dark-border bg-dark-card p-3" aria-label="Report sections">
+      <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-widest text-subtle">
         Sections
       </p>
       <div className="space-y-0.5">
@@ -69,7 +69,7 @@ export function SectionNavigation({ availableSections }: SectionNavigationProps)
               "block w-full rounded-md px-2.5 py-1.5 text-left text-xs transition-colors",
               activeSection === key
                 ? "border-l-2 border-primary bg-primary-light font-medium text-primary"
-                : "border-l-2 border-transparent text-gray-500 hover:bg-dark-hover hover:text-gray-300"
+                : "border-l-2 border-transparent text-muted-fg hover:bg-dark-hover hover:text-foreground"
             )}
           >
             {t(`report.sections.${key}`)}

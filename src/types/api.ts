@@ -13,6 +13,7 @@ export interface User {
   language: string;
   selected_pairs: string[];
   credit_balance: number;
+  theme: "light" | "dark" | "system";
   is_admin: boolean;
   created_at: string;
 }

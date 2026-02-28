@@ -24,19 +24,19 @@ interface BadgeProps {
 }
 
 const variantClasses: Record<BadgeVariant, string> = {
-  default: "bg-dark-border text-gray-300",
+  default: "bg-[var(--badge-default-bg)] text-[var(--badge-default-text)]",
   primary: "bg-primary-light text-primary",
   "tier-retail": "bg-primary-light text-primary",
-  "tier-professional": "bg-amber-900/30 text-amber-400",
+  "tier-professional": "bg-[var(--badge-warning-bg)] text-[var(--badge-warning-text)]",
   "zone-supply": "bg-supply-light text-supply",
   "zone-demand": "bg-demand-light text-demand",
-  "status-active": "bg-green-900/30 text-green-400",
-  "status-expired": "bg-gray-800/50 text-gray-400",
-  "status-locked": "bg-gray-800/50 text-gray-500",
-  success: "bg-green-900/30 text-green-400",
-  warning: "bg-amber-900/30 text-amber-400",
-  danger: "bg-red-900/30 text-red-400",
-  info: "bg-blue-900/30 text-blue-400",
+  "status-active": "bg-[var(--badge-success-bg)] text-[var(--badge-success-text)]",
+  "status-expired": "bg-[var(--badge-default-bg)] text-[var(--badge-default-text)]",
+  "status-locked": "bg-[var(--badge-default-bg)] text-subtle",
+  success: "bg-[var(--badge-success-bg)] text-[var(--badge-success-text)]",
+  warning: "bg-[var(--badge-warning-bg)] text-[var(--badge-warning-text)]",
+  danger: "bg-[var(--badge-danger-bg)] text-[var(--badge-danger-text)]",
+  info: "bg-[var(--badge-info-bg)] text-[var(--badge-info-text)]",
 };
 
 export function Badge({ variant = "default", className, children }: BadgeProps) {

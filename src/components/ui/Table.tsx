@@ -32,62 +32,64 @@ export function Table<T>({
   onRowClick,
 }: TableProps<T>) {
   return (
-    <div className={cn("overflow-x-auto", className)}>
-      <table className="w-full text-sm">
-        <thead>
-          <tr className="border-b border-dark-border">
-            {columns.map((col) => (
-              <th
-                key={col.key}
-                scope="col"
-                className={cn(
-                  "px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500",
-                  col.className
-                )}
-              >
-                {col.header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-dark-border">
-          {loading ? (
-            Array.from({ length: loadingRows }).map((_, i) => (
-              <tr key={i}>
-                <td colSpan={columns.length} className="px-4">
-                  <SkeletonTableRow columns={columns.length} />
+    <div className={cn("overflow-hidden rounded-xl border border-dark-border", className)}>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-dark-border bg-dark-surface">
+              {columns.map((col) => (
+                <th
+                  key={col.key}
+                  scope="col"
+                  className={cn(
+                    "px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted-fg",
+                    col.className
+                  )}
+                >
+                  {col.header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-dark-border bg-dark-card">
+            {loading ? (
+              Array.from({ length: loadingRows }).map((_, i) => (
+                <tr key={i}>
+                  <td colSpan={columns.length} className="px-4">
+                    <SkeletonTableRow columns={columns.length} />
+                  </td>
+                </tr>
+              ))
+            ) : data.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={columns.length}
+                  className="px-4 py-8 text-center text-muted-fg"
+                >
+                  {emptyMessage}
                 </td>
               </tr>
-            ))
-          ) : data.length === 0 ? (
-            <tr>
-              <td
-                colSpan={columns.length}
-                className="px-4 py-8 text-center text-gray-500"
-              >
-                {emptyMessage}
-              </td>
-            </tr>
-          ) : (
-            data.map((item) => (
-              <tr
-                key={keyExtractor(item)}
-                className={cn(
-                  "transition-colors hover:bg-dark-hover",
-                  onRowClick && "cursor-pointer"
-                )}
-                onClick={() => onRowClick?.(item)}
-              >
-                {columns.map((col) => (
-                  <td key={col.key} className={cn("px-4 py-3 text-gray-300", col.className)}>
-                    {col.render(item)}
-                  </td>
-                ))}
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            ) : (
+              data.map((item) => (
+                <tr
+                  key={keyExtractor(item)}
+                  className={cn(
+                    "transition-colors hover:bg-dark-hover",
+                    onRowClick && "cursor-pointer"
+                  )}
+                  onClick={() => onRowClick?.(item)}
+                >
+                  {columns.map((col) => (
+                    <td key={col.key} className={cn("px-4 py-3 text-foreground", col.className)}>
+                      {col.render(item)}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
