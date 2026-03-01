@@ -53,7 +53,9 @@ export default function ReportByIdPage() {
   if (!report) return null;
 
   const sections = report.full_narrative?.sections || {};
-  const availableSections = SECTION_ORDER.filter((k) => sections[k]);
+  const knownSections = SECTION_ORDER.filter((k) => sections[k]);
+  const extraSections = Object.keys(sections).filter((k) => !SECTION_ORDER.includes(k));
+  const availableSections = [...knownSections, ...extraSections];
 
   return (
     <div className="animate-fade-in">

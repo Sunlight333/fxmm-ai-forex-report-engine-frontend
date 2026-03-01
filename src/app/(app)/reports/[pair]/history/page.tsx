@@ -65,7 +65,7 @@ export default function ReportHistoryPage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-medium text-foreground">
-                      {format(new Date(report.date), "MMMM d, yyyy")}
+                      {format(new Date(report.date + "T12:00:00"), "MMMM d, yyyy")}
                     </span>
                     {report.market_state && (
                       <Badge variant="primary">{report.market_state}</Badge>

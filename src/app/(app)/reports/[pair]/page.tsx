@@ -118,7 +118,10 @@ export default function ReportPage() {
   if (!report) return null;
 
   const sections = report.full_narrative?.sections || {};
-  const availableSections = SECTION_ORDER.filter((k) => sections[k]);
+  // Show known sections in defined order, then append any extra sections the LLM produced
+  const knownSections = SECTION_ORDER.filter((k) => sections[k]);
+  const extraSections = Object.keys(sections).filter((k) => !SECTION_ORDER.includes(k));
+  const availableSections = [...knownSections, ...extraSections];
 
   return (
     <div className="animate-fade-in">

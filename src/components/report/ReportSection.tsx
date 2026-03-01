@@ -9,9 +9,18 @@ interface ReportSectionProps {
   className?: string;
 }
 
+function sectionTitle(key: string): string {
+  return key
+    .split("_")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
 export function ReportSection({ sectionKey, content, className }: ReportSectionProps) {
   const { t } = useT();
-  const title = t(`report.sections.${sectionKey}`);
+  const raw = t(`report.sections.${sectionKey}`);
+  // If the i18n key wasn't found, title-case the snake_case key
+  const title = raw.startsWith("report.sections.") ? sectionTitle(sectionKey) : raw;
 
   return (
     <div
