@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
@@ -146,14 +147,16 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const navContent = (
     <div className="flex h-full flex-col">
       {/* Logo */}
-      <div className="flex h-16 items-center gap-2.5 px-5">
-        <Link href="/dashboard" className="flex items-center gap-2.5" onClick={onClose}>
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500">
-            <span className="text-sm font-bold text-white">FX</span>
-          </div>
-          <div>
-            <span className="text-base font-bold tracking-tight text-foreground">FXMM</span>
-          </div>
+      <div className="flex h-16 items-center px-4">
+        <Link href="/dashboard" className="flex items-center" onClick={onClose}>
+          <Image
+            src="/logo.png"
+            alt="FXMM — FX Market Map"
+            width={140}
+            height={51}
+            className="h-9 w-auto"
+            priority
+          />
         </Link>
       </div>
 
