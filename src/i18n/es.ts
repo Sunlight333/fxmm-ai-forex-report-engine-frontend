@@ -130,6 +130,17 @@ export const es: TranslationKeys = {
     swept: "Barrida",
     invalidated: "Invalidada",
   },
+  reportList: {
+    sortBy: "Ordenar por",
+    sortName: "Nombre",
+    sortDate: "Fecha",
+    sortType: "Tipo",
+    ascending: "Ascendente",
+    descending: "Descendente",
+    filterPair: "Filtrar por par...",
+    allTypes: "Todos los Tipos",
+    noResults: "Ningun informe coincide con tus filtros.",
+  },
   history: {
     title: "Historial de Informes {pair}",
     noReports: "A\u00fan no se han generado informes para este par.",

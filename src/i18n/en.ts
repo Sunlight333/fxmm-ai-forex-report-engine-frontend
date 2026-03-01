@@ -128,6 +128,17 @@ export const en = {
     swept: "Swept",
     invalidated: "Invalidated",
   },
+  reportList: {
+    sortBy: "Sort by",
+    sortName: "Name",
+    sortDate: "Date",
+    sortType: "Type",
+    ascending: "Ascending",
+    descending: "Descending",
+    filterPair: "Filter by pair...",
+    allTypes: "All Types",
+    noResults: "No reports match your filters.",
+  },
   history: {
     title: "{pair} Report History",
     noReports: "No reports generated yet for this pair.",
